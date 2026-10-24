@@ -17,6 +17,7 @@ class _AddTournamentDialogState extends State<AddTeamDialog> {
   final TextEditingController _nameController = TextEditingController();
   bool _isSaving = false;
   String? _nameError;
+  String? _saveError;
 
   @override
   void initState() {
@@ -76,18 +77,10 @@ class _AddTournamentDialogState extends State<AddTeamDialog> {
       if (success) {
         Navigator.of(context).pop();
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              widget.team == null
-                  ? "Can't add Team. Please try again."
-                  : "Can't update Team. Please try again.",
-            ),
-          ),
-        );
-
         setState(() {
           _isSaving = false;
+          _saveError =
+              'A team with this name may already exist in this tournament.';
         });
       }
     } catch (e) {
@@ -107,24 +100,48 @@ class _AddTournamentDialogState extends State<AddTeamDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(widget.team == null ? 'Add Team' : 'Edit Team'),
-      content: TextField(
-        controller: _nameController,
-        autofocus: true,
-        textCapitalization: TextCapitalization.sentences,
-        decoration: InputDecoration(
-          border: const OutlineInputBorder(),
-          hintText: 'Team name',
-          errorText: _nameError,
-        ),
-        onChanged: (value) {
-          if (_nameError != null && value.trim().isNotEmpty) {
-            setState(() {
-              _nameError = null;
-            });
-          }
-        },
-        onSubmitted: (_) => _saveTeam(),
+
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextField(
+            controller: _nameController,
+            autofocus: true,
+            textCapitalization: TextCapitalization.sentences,
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(),
+              hintText: 'Team name',
+              errorText: _nameError,
+            ),
+            onChanged: (value) {
+              if (_nameError != null && value.trim().isNotEmpty) {
+                setState(() {
+                  _nameError = null;
+                });
+              }
+
+              if (_saveError != null) {
+                setState(() {
+                  _saveError = null;
+                });
+              }
+            },
+            onSubmitted: (_) => _saveTeam(),
+          ),
+          if (_saveError != null) ...[
+            const SizedBox(height: 12),
+            Text(
+              _saveError!,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.error,
+                fontSize: 13,
+              ),
+            ),
+          ],
+        ],
       ),
+
       actions: [
         TextButton(
           onPressed: _isSaving ? null : () => Navigator.of(context).pop(),

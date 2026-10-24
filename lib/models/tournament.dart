@@ -11,7 +11,7 @@ class Tournament {
 
   factory Tournament.fromMap(Map<String, dynamic> map) {
     return Tournament(
-      id: map['id'] as int,
+      id: map['id'] as int?,
       name: map['name'] as String,
       createdAt: map['created_at'] as String,
     );

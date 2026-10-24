@@ -70,7 +70,7 @@ class _TeamPageState extends State<TeamPage> {
                   icon: Icon(Icons.delete_outline, color: Colors.redAccent),
                 ),
                 onLongPress: () =>
-                    _editTournament(teams[index], widget.tournament.id!),
+                    _editTeam(teams[index], widget.tournament.id!),
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -99,7 +99,7 @@ class _TeamPageState extends State<TeamPage> {
     );
   }
 
-  void _editTournament(Team team, int tournamentId) {
+  void _editTeam(Team team, int tournamentId) {
     showDialog<void>(
       context: context,
       builder: (_) => AddTeamDialog(team, tournamentId: tournamentId),

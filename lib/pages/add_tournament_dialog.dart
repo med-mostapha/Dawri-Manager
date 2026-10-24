@@ -15,6 +15,7 @@ class AddTournamentDialog extends StatefulWidget {
 class _AddTournamentDialogState extends State<AddTournamentDialog> {
   final TextEditingController _nameController = TextEditingController();
   bool _isSaving = false;
+  String? _nameError;
 
   @override
   void initState() {
@@ -32,11 +33,19 @@ class _AddTournamentDialogState extends State<AddTournamentDialog> {
   Future<void> _saveTournament() async {
     final name = _nameController.text.trim();
 
-    if (name.isEmpty || _isSaving) {
+    if (_isSaving) {
+      return;
+    }
+
+    if (name.isEmpty) {
+      setState(() {
+        _nameError = 'Please enter a championship name.';
+      });
       return;
     }
 
     setState(() {
+      _nameError = null;
       _isSaving = true;
     });
 
@@ -103,10 +112,18 @@ class _AddTournamentDialogState extends State<AddTournamentDialog> {
         controller: _nameController,
         autofocus: true,
         textCapitalization: TextCapitalization.sentences,
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: 'Add Championship',
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(),
+          hintText: 'Championship name',
+          errorText: _nameError,
         ),
+        onChanged: (value) {
+          if (_nameError != null && value.trim().isNotEmpty) {
+            setState(() {
+              _nameError = null;
+            });
+          }
+        },
         onSubmitted: (_) => _saveTournament(),
       ),
       actions: [

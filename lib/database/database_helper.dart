@@ -3,6 +3,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:tournament_organizer/models/player.dart';
 import 'package:tournament_organizer/models/team.dart';
 import 'package:tournament_organizer/models/tournament.dart';
+import 'package:tournament_organizer/models/match.dart';
 
 class DatabaseHelper {
   // static Database? _db;
@@ -324,5 +325,90 @@ class DatabaseHelper {
       where: '$_playerIdColumn = ?',
       whereArgs: [id],
     );
+  }
+
+  // Match CRUD
+
+  Future<int> insertMatch(Match match) async {
+    final db = await getDatabase();
+
+    final matchData = match.toMap()..remove('id');
+
+    return await db.insert(
+      _matchesTableName,
+      matchData,
+      conflictAlgorithm: ConflictAlgorithm.abort,
+    );
+  }
+
+  Future<List<Match>> getMatchesByTournament(int tournamentId) async {
+    final db = await getDatabase();
+
+    final result = await db.query(
+      _matchesTableName,
+      where: '$_matchTournamentIdColumn = ?',
+      whereArgs: [tournamentId],
+      orderBy: '$_matchRoundNumberColumn ASC, $_matchIdColumn ASC',
+    );
+
+    return result.map((row) => Match.fromMap(row)).toList();
+  }
+
+  Future<List<Match>> getMatchesByRound(
+    int tournamentId,
+    int roundNumber,
+  ) async {
+    final db = await getDatabase();
+
+    final result = await db.query(
+      _matchesTableName,
+      where: '$_matchTournamentIdColumn = ? AND $_matchRoundNumberColumn = ?',
+      whereArgs: [tournamentId, roundNumber],
+      orderBy: '$_matchIdColumn ASC',
+    );
+
+    return result.map((row) => Match.fromMap(row)).toList();
+  }
+
+  Future<int> updateMatch(Match match) async {
+    if (match.id == null) {
+      throw ArgumentError('Cannot update a match without an ID.');
+    }
+
+    final db = await getDatabase();
+
+    final matchData = match.toMap()..remove('id');
+
+    return await db.update(
+      _matchesTableName,
+      matchData,
+      where: '$_matchIdColumn = ?',
+      whereArgs: [match.id],
+      conflictAlgorithm: ConflictAlgorithm.abort,
+    );
+  }
+
+  Future<int> deleteMatch(int matchId) async {
+    final db = await getDatabase();
+
+    return await db.transaction((txn) async {
+      final goals = await txn.query(
+        _goalsTableName,
+        columns: [_goalIdColumn],
+        where: '$_goalMatchIdColumn = ?',
+        whereArgs: [matchId],
+        limit: 1,
+      );
+
+      if (goals.isNotEmpty) {
+        throw StateError('Cannot delete a match that has recorded goals.');
+      }
+
+      return await txn.delete(
+        _matchesTableName,
+        where: '$_matchIdColumn = ?',
+        whereArgs: [matchId],
+      );
+    });
   }
 }

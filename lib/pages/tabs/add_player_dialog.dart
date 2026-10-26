@@ -83,7 +83,9 @@ class _AddPlayerDialogState extends State<AddPlayerDialog> {
     } else {
       setState(() {
         _isSaving = false;
-        _validationError = "Can't add player. Please try again.";
+        _validationError = widget.player == null
+            ? "Can't add player. Please try again."
+            : "Can't update player. Please try again.";
       });
     }
   }
@@ -96,6 +98,13 @@ class _AddPlayerDialogState extends State<AddPlayerDialog> {
         mainAxisSize: MainAxisSize.min,
         children: [
           TextField(
+            onChanged: (_) {
+              if (_validationError != null) {
+                setState(() {
+                  _validationError = null;
+                });
+              }
+            },
             controller: _nameController,
             autofocus: true,
             textCapitalization: TextCapitalization.words,
@@ -111,6 +120,13 @@ class _AddPlayerDialogState extends State<AddPlayerDialog> {
               FilteringTextInputFormatter.digitsOnly,
               LengthLimitingTextInputFormatter(2),
             ],
+            onChanged: (_) {
+              if (_validationError != null) {
+                setState(() {
+                  _validationError = null;
+                });
+              }
+            },
             controller: _ageController,
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
@@ -131,7 +147,7 @@ class _AddPlayerDialogState extends State<AddPlayerDialog> {
       actions: [
         TextButton(
           onPressed: _isSaving ? null : () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: Text(widget.player == null ? 'Create' : 'Save Changes'),
         ),
         FilledButton(
           onPressed: _isSaving ? null : _savePlayer,

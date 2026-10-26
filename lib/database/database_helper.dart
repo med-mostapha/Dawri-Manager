@@ -14,15 +14,33 @@ class DatabaseHelper {
       _tournamentIdColumn = 'id',
       _tournamentNameColumn = 'name',
       _tournamentCreatedAtColumn = 'created_at';
+
   final String _teamsTableName = 'teams',
       _teamIdColumn = 'id',
       _teamNameColumn = 'name',
       _teamTournamentIdColumn = 'tournament_id';
+
   final String _playersTableName = 'players',
       _playerIdColumn = 'id',
       _playerNameColumn = 'name',
       _playerTeamIdColumn = 'team_id',
       _playerAgeColumn = 'age';
+
+  final String _matchesTableName = 'matches',
+      _matchIdColumn = 'id',
+      _matchTournamentIdColumn = 'tournament_id',
+      _matchHomeTeamIdColumn = 'home_team_id',
+      _matchAwayTeamIdColumn = 'away_team_id',
+      _matchRoundNumberColumn = 'round_number',
+      _matchScheduledAtColumn = 'scheduled_at',
+      _matchStatusColumn = 'status';
+
+  final String _goalsTableName = 'goals',
+      _goalIdColumn = 'id',
+      _goalMatchIdColumn = 'match_id',
+      _goalPlayerIdColumn = 'player_id',
+      _goalTeamIdColumn = 'team_id',
+      _goalMinuteColumn = 'minute';
 
   DatabaseHelper._constructor();
 
@@ -47,6 +65,7 @@ class DatabaseHelper {
     final databaseDirPath = await getDatabasesPath();
     final databasePath =
         _testDatabasePath ?? join(databaseDirPath, 'tournament_organizer.db');
+
     final database = await openDatabase(
       databasePath,
       version: 1,
@@ -55,51 +74,128 @@ class DatabaseHelper {
       },
       onCreate: (db, version) async {
         await db.execute('''
-          CREATE TABLE $_tournamentsTableName (
-            $_tournamentIdColumn INTEGER PRIMARY KEY AUTOINCREMENT,
-            $_tournamentNameColumn TEXT NOT NULL,
-            $_tournamentCreatedAtColumn TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
-          );
-        ''');
+        CREATE TABLE $_tournamentsTableName (
+          $_tournamentIdColumn INTEGER PRIMARY KEY AUTOINCREMENT,
+          $_tournamentNameColumn TEXT NOT NULL,
+          $_tournamentCreatedAtColumn TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+        );
+      ''');
 
         await db.execute('''
-          CREATE TABLE $_teamsTableName (
-            $_teamIdColumn INTEGER PRIMARY KEY AUTOINCREMENT,
-            $_teamTournamentIdColumn INTEGER NOT NULL,
-            $_teamNameColumn TEXT NOT NULL,
+        CREATE TABLE $_teamsTableName (
+          $_teamIdColumn INTEGER PRIMARY KEY AUTOINCREMENT,
+          $_teamTournamentIdColumn INTEGER NOT NULL,
+          $_teamNameColumn TEXT NOT NULL,
 
-            FOREIGN KEY ($_teamTournamentIdColumn)
-            REFERENCES tournaments($_tournamentIdColumn)
-            ON DELETE CASCADE,
+          FOREIGN KEY ($_teamTournamentIdColumn)
+          REFERENCES tournaments($_tournamentIdColumn)
+          ON DELETE CASCADE,
 
-            UNIQUE ($_teamTournamentIdColumn, $_teamNameColumn)
-          );
-        ''');
-
-        await db.execute('''
-          CREATE TABLE $_playersTableName (
-            $_playerIdColumn INTEGER PRIMARY KEY AUTOINCREMENT,
-            $_playerTeamIdColumn INTEGER NOT NULL,
-            $_playerNameColumn TEXT NOT NULL,
-            $_playerAgeColumn INTEGER,
-       
-            FOREIGN KEY ($_playerTeamIdColumn)
-            REFERENCES teams($_teamIdColumn)
-            ON DELETE CASCADE
-          );
-        ''');
+          UNIQUE ($_teamTournamentIdColumn, $_teamNameColumn)
+        );
+      ''');
 
         await db.execute('''
-          CREATE INDEX idx_teams_tournament_id
-          ON teams($_teamTournamentIdColumn);
-        ''');
+        CREATE TABLE $_playersTableName (
+          $_playerIdColumn INTEGER PRIMARY KEY AUTOINCREMENT,
+          $_playerTeamIdColumn INTEGER NOT NULL,
+          $_playerNameColumn TEXT NOT NULL,
+          $_playerAgeColumn INTEGER,
+
+          FOREIGN KEY ($_playerTeamIdColumn)
+          REFERENCES teams($_teamIdColumn)
+          ON DELETE CASCADE
+        );
+      ''');
 
         await db.execute('''
-          CREATE INDEX idx_players_team_id
-          ON players($_playerTeamIdColumn);
-        ''');
+        CREATE TABLE $_matchesTableName (
+          $_matchIdColumn INTEGER PRIMARY KEY AUTOINCREMENT,
+          $_matchTournamentIdColumn INTEGER NOT NULL,
+          $_matchHomeTeamIdColumn INTEGER NOT NULL,
+          $_matchAwayTeamIdColumn INTEGER NOT NULL,
+          $_matchRoundNumberColumn INTEGER NOT NULL,
+          $_matchScheduledAtColumn TEXT,
+          $_matchStatusColumn TEXT NOT NULL DEFAULT 'scheduled',
+
+          FOREIGN KEY ($_matchTournamentIdColumn)
+          REFERENCES tournaments($_tournamentIdColumn)
+          ON DELETE CASCADE,
+
+          FOREIGN KEY ($_matchHomeTeamIdColumn)
+          REFERENCES teams($_teamIdColumn)
+          ON DELETE RESTRICT,
+
+          FOREIGN KEY ($_matchAwayTeamIdColumn)
+          REFERENCES teams($_teamIdColumn)
+          ON DELETE RESTRICT,
+
+          CHECK ($_matchHomeTeamIdColumn != $_matchAwayTeamIdColumn),
+
+          CHECK ($_matchRoundNumberColumn > 0),
+
+          CHECK (
+            $_matchStatusColumn IN ('scheduled', 'finished')
+          )
+        );
+      ''');
+
+        await db.execute('''
+        CREATE TABLE $_goalsTableName (
+          $_goalIdColumn INTEGER PRIMARY KEY AUTOINCREMENT,
+          $_goalMatchIdColumn INTEGER NOT NULL,
+          $_goalPlayerIdColumn INTEGER NOT NULL,
+          $_goalTeamIdColumn INTEGER NOT NULL,
+          $_goalMinuteColumn INTEGER,
+
+          FOREIGN KEY ($_goalMatchIdColumn)
+          REFERENCES matches($_matchIdColumn)
+          ON DELETE CASCADE,
+
+          FOREIGN KEY ($_goalPlayerIdColumn)
+          REFERENCES players($_playerIdColumn)
+          ON DELETE RESTRICT,
+
+          FOREIGN KEY ($_goalTeamIdColumn)
+          REFERENCES teams($_teamIdColumn)
+          ON DELETE RESTRICT,
+
+          CHECK (
+            $_goalMinuteColumn IS NULL OR $_goalMinuteColumn >= 0
+          )
+        );
+      ''');
+
+        await db.execute('''
+        CREATE INDEX idx_teams_tournament_id
+        ON $_teamsTableName($_teamTournamentIdColumn);
+      ''');
+
+        await db.execute('''
+        CREATE INDEX idx_players_team_id
+        ON $_playersTableName($_playerTeamIdColumn);
+      ''');
+
+        await db.execute('''
+        CREATE INDEX idx_matches_tournament_round
+        ON $_matchesTableName(
+          $_matchTournamentIdColumn,
+          $_matchRoundNumberColumn
+        );
+      ''');
+
+        await db.execute('''
+        CREATE INDEX idx_goals_match_id
+        ON $_goalsTableName($_goalMatchIdColumn);
+      ''');
+
+        await db.execute('''
+        CREATE INDEX idx_goals_player_id
+        ON $_goalsTableName($_goalPlayerIdColumn);
+      ''');
       },
     );
+
     return database;
   }
 

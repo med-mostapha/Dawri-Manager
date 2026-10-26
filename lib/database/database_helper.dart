@@ -15,7 +15,8 @@ class DatabaseHelper {
   final String _tournamentsTableName = 'tournaments',
       _tournamentIdColumn = 'id',
       _tournamentNameColumn = 'name',
-      _tournamentCreatedAtColumn = 'created_at';
+      _tournamentCreatedAtColumn = 'created_at',
+      _tournamentMatchType = 'match_type';
 
   final String _teamsTableName = 'teams',
       _teamIdColumn = 'id',
@@ -79,7 +80,9 @@ class DatabaseHelper {
         CREATE TABLE $_tournamentsTableName (
           $_tournamentIdColumn INTEGER PRIMARY KEY AUTOINCREMENT,
           $_tournamentNameColumn TEXT NOT NULL,
-          $_tournamentCreatedAtColumn TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+          $_tournamentCreatedAtColumn TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          $_tournamentMatchType TEXT NOT NULL DEFAULT 'homeAndAway'
+          CHECK ($_tournamentMatchType IN ('singleRound', 'homeAndAway'))
         );
       ''');
 
@@ -207,6 +210,7 @@ class DatabaseHelper {
     await db.insert(_tournamentsTableName, {
       _tournamentNameColumn: t.name,
       _tournamentCreatedAtColumn: t.createdAt,
+      _tournamentMatchType: t.matchType.name,
     });
   }
 
@@ -225,7 +229,7 @@ class DatabaseHelper {
     final db = await database;
     await db.update(
       _tournamentsTableName,
-      {_tournamentNameColumn: t.name},
+      {_tournamentNameColumn: t.name, _tournamentMatchType: t.matchType.name},
       where: '$_tournamentIdColumn = ?',
       whereArgs: [t.id],
     );

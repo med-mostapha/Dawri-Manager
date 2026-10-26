@@ -68,37 +68,116 @@ class _HomePageState extends State<HomePage> {
           (_, _, final tournament) => ListView.builder(
             itemCount: tournament.length,
             itemBuilder: (context, index) {
-              return Card(
-                child: ListTile(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => TournamentDetailsPage(
-                          tournament: tournament[index],
-                        ),
-                      ),
-                    );
-                  },
-                  onLongPress: () => _editTournament(tournament[index]),
-                  leading: Icon(
-                    Icons.emoji_events,
-                    color: Colors.amber, // gold color 🏆
-                    size: 34,
-                  ),
-                  trailing: IconButton(
-                    onPressed: () => _deleteTournament(tournament[index]),
-                    icon: Icon(Icons.delete_outline, color: Colors.redAccent),
-                  ),
-                  title: Text(tournament[index].name),
-                  subtitle: Text(
-                    tournament[index].createdAt,
-                    style: TextStyle(fontSize: 10.0, color: Colors.brown),
-                  ),
-                ),
-              );
+              return _tournamentCard(tournament[index]);
             },
           ),
         },
+      ),
+    );
+  }
+
+  Widget _tournamentCard(Tournament tournament) {
+    return Card(
+      elevation: 1,
+      margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 2),
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(14),
+        side: BorderSide(color: Colors.grey.shade200),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) =>
+                  TournamentDetailsPage(tournament: tournament),
+            ),
+          );
+        },
+        onLongPress: () => _editTournament(tournament),
+        leading: Container(
+          width: 48,
+          height: 48,
+          decoration: BoxDecoration(
+            color: Colors.amber.withValues(alpha: 0.13),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: const Icon(
+            Icons.emoji_events_rounded,
+            color: Colors.amber,
+            size: 28,
+          ),
+        ),
+        title: Text(
+          tournament.name,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.w600,
+            color: Colors.black87,
+          ),
+        ),
+        subtitle: Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(
+                    Icons.calendar_today_outlined,
+                    size: 14,
+                    color: Colors.grey.shade600,
+                  ),
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: Text(
+                      tournament.createdAt,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  Icon(
+                    tournament.matchType == MatchType.singleRound
+                        ? Icons.looks_one_outlined
+                        : Icons.sync_rounded,
+                    size: 16,
+                    color: Colors.blueGrey.shade700,
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    tournament.matchType == MatchType.singleRound
+                        ? 'Aller simple'
+                        : 'Aller-retour',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.blueGrey.shade700,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        trailing: IconButton(
+          tooltip: 'Delete championship',
+          onPressed: () => _deleteTournament(tournament),
+          icon: const Icon(
+            Icons.delete_outline_rounded,
+            color: Colors.redAccent,
+          ),
+        ),
       ),
     );
   }

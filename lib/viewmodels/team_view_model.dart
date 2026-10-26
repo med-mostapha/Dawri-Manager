@@ -48,14 +48,11 @@ class TeamViewModel extends ChangeNotifier {
   }
 
   Future<bool> addTeam(Team team) async {
-    _error = null;
-
     try {
       await _databaseHelper.insertTeam(team);
       await _refreshTeams(team.tournamentId);
       return true;
     } catch (e) {
-      _error = "Can't add team";
       return false;
     } finally {
       notifyListeners();
@@ -63,14 +60,11 @@ class TeamViewModel extends ChangeNotifier {
   }
 
   Future<bool> updateTeam(Team team) async {
-    _error = null;
-
     try {
       await _databaseHelper.updateTeam(team);
       await _refreshTeams(team.tournamentId);
       return true;
     } catch (e) {
-      _error = "Can't update team";
       return false;
     } finally {
       notifyListeners();

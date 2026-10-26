@@ -16,12 +16,14 @@ class _AddTournamentDialogState extends State<AddTournamentDialog> {
   final TextEditingController _nameController = TextEditingController();
   bool _isSaving = false;
   String? _nameError;
+  late MatchType _matchType;
 
   @override
   void initState() {
     super.initState();
 
     _nameController.text = widget.tournament?.name ?? '';
+    _matchType = widget.tournament?.matchType ?? MatchType.homeAndAway;
   }
 
   @override
@@ -58,7 +60,7 @@ class _AddTournamentDialogState extends State<AddTournamentDialog> {
 
       if (tournament == null) {
         success = await viewModel.addTournament(
-          Tournament(name: name, createdAt: getNow()),
+          Tournament(name: name, createdAt: getNow(), matchType: _matchType),
         );
       } else {
         success = await viewModel.updateTournament(
@@ -66,6 +68,7 @@ class _AddTournamentDialogState extends State<AddTournamentDialog> {
             id: tournament.id,
             name: name,
             createdAt: tournament.createdAt,
+            matchType: _matchType,
           ),
         );
       }
@@ -108,23 +111,60 @@ class _AddTournamentDialogState extends State<AddTournamentDialog> {
       title: Text(
         widget.tournament == null ? 'Add Championship' : 'Edit Championship',
       ),
-      content: TextField(
-        controller: _nameController,
-        autofocus: true,
-        textCapitalization: TextCapitalization.sentences,
-        decoration: InputDecoration(
-          border: const OutlineInputBorder(),
-          hintText: 'Championship name',
-          errorText: _nameError,
-        ),
-        onChanged: (value) {
-          if (_nameError != null && value.trim().isNotEmpty) {
-            setState(() {
-              _nameError = null;
-            });
-          }
-        },
-        onSubmitted: (_) => _saveTournament(),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextField(
+            controller: _nameController,
+            autofocus: true,
+            textCapitalization: TextCapitalization.sentences,
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(),
+              hintText: 'Championship name',
+              errorText: _nameError,
+            ),
+            onChanged: (value) {
+              if (_nameError != null && value.trim().isNotEmpty) {
+                setState(() {
+                  _nameError = null;
+                });
+              }
+            },
+            onSubmitted: (_) => _saveTournament(),
+          ),
+          const SizedBox(height: 16),
+          const Text(
+            'Match format',
+            style: TextStyle(fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(height: 8),
+          RadioGroup<MatchType>(
+            groupValue: _matchType,
+            onChanged: (value) {
+              if (value != null) {
+                setState(() {
+                  _matchType = value;
+                });
+              }
+            },
+            child: const Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                RadioListTile<MatchType>(
+                  value: MatchType.singleRound,
+                  title: Text('Aller simple (One leg)'),
+                  contentPadding: EdgeInsets.zero,
+                ),
+                RadioListTile<MatchType>(
+                  value: MatchType.homeAndAway,
+                  title: Text('Aller-retour (Home and away)'),
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
       actions: [
         TextButton(

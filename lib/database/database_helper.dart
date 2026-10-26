@@ -4,6 +4,7 @@ import 'package:tournament_organizer/models/player.dart';
 import 'package:tournament_organizer/models/team.dart';
 import 'package:tournament_organizer/models/tournament.dart';
 import 'package:tournament_organizer/models/match.dart';
+import 'package:tournament_organizer/models/goal.dart';
 
 class DatabaseHelper {
   // static Database? _db;
@@ -328,7 +329,6 @@ class DatabaseHelper {
   }
 
   // Match CRUD
-
   Future<int> insertMatch(Match match) async {
     final db = await getDatabase();
 
@@ -410,5 +410,119 @@ class DatabaseHelper {
         whereArgs: [matchId],
       );
     });
+  }
+
+  // Goal CRUD
+  Future<void> _validateGoal(Transaction txn, Goal goal) async {
+    final matches = await txn.query(
+      _matchesTableName,
+      columns: [_matchHomeTeamIdColumn, _matchAwayTeamIdColumn],
+      where: '$_matchIdColumn = ?',
+      whereArgs: [goal.matchId],
+      limit: 1,
+    );
+
+    if (matches.isEmpty) {
+      throw StateError('Match not found.');
+    }
+
+    final match = matches.first;
+    final homeTeamId = match[_matchHomeTeamIdColumn] as int;
+    final awayTeamId = match[_matchAwayTeamIdColumn] as int;
+
+    if (goal.teamId != homeTeamId && goal.teamId != awayTeamId) {
+      throw ArgumentError('The goal team is not part of this match.');
+    }
+
+    final players = await txn.query(
+      _playersTableName,
+      columns: [_playerTeamIdColumn],
+      where: '$_playerIdColumn = ?',
+      whereArgs: [goal.playerId],
+      limit: 1,
+    );
+
+    if (players.isEmpty) {
+      throw StateError('Player not found.');
+    }
+
+    final playerTeamId = players.first[_playerTeamIdColumn] as int;
+
+    if (playerTeamId != goal.teamId) {
+      throw ArgumentError(
+        'The selected player does not belong to the goal team.',
+      );
+    }
+  }
+
+  Future<int> insertGoal(Goal goal) async {
+    final db = await getDatabase();
+
+    return await db.transaction((txn) async {
+      await _validateGoal(txn, goal);
+
+      final goalData = goal.toMap()..remove(_goalIdColumn);
+
+      return await txn.insert(
+        _goalsTableName,
+        goalData,
+        conflictAlgorithm: ConflictAlgorithm.abort,
+      );
+    });
+  }
+
+  Future<List<Goal>> getGoalsByMatch(int matchId) async {
+    final db = await getDatabase();
+
+    final result = await db.query(
+      _goalsTableName,
+      where: '$_goalMatchIdColumn = ?',
+      whereArgs: [matchId],
+      orderBy: '$_goalMinuteColumn ASC, $_goalIdColumn ASC',
+    );
+
+    return result.map((row) => Goal.fromMap(row)).toList();
+  }
+
+  Future<int> updateGoal(Goal goal) async {
+    if (goal.id == null) {
+      throw ArgumentError('Cannot update a goal without an ID.');
+    }
+
+    final db = await getDatabase();
+
+    return await db.transaction((txn) async {
+      await _validateGoal(txn, goal);
+
+      final goalData = goal.toMap()..remove(_goalIdColumn);
+
+      return await txn.update(
+        _goalsTableName,
+        goalData,
+        where: '$_goalIdColumn = ?',
+        whereArgs: [goal.id],
+        conflictAlgorithm: ConflictAlgorithm.abort,
+      );
+    });
+  }
+
+  Future<int> deleteGoal(int goalId) async {
+    final db = await getDatabase();
+
+    return await db.delete(
+      _goalsTableName,
+      where: '$_goalIdColumn = ?',
+      whereArgs: [goalId],
+    );
+  }
+
+  Future<int> deleteGoalsByMatch(int matchId) async {
+    final db = await getDatabase();
+
+    return await db.delete(
+      _goalsTableName,
+      where: '$_goalMatchIdColumn = ?',
+      whereArgs: [matchId],
+    );
   }
 }

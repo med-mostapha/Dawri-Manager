@@ -1,0 +1,18 @@
+flutter_native_splash:
+  ios: false
+  web: false
+
+  color: "#FDF7FF"
+
+  image: assets/images/splash_logo.png
+
+  branding: assets/images/splash_branding.png
+  branding_mode: bottom
+  branding_bottom_padding: 24
+
+  fullscreen: true
+
+  android_12:
+    color: "#FDF7FF"
+    branding: assets/images/splash_branding.png
+    branding_bottom_padding: 24

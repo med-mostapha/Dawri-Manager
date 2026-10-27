@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:tournament_organizer/models/tournament.dart';
+import 'package:tournament_organizer/pages/tabs/matches_tab.dart';
 import 'package:tournament_organizer/pages/tabs/team_page.dart';
+import 'package:tournament_organizer/viewmodels/tournament_view_model.dart';
 import 'package:tournament_organizer/widgets/build_placeholder.dart';
 
 class TournamentDetailsPage extends StatelessWidget {
@@ -17,8 +21,7 @@ class TournamentDetailsPage extends StatelessWidget {
           centerTitle: true,
           title: Text(tournament.name),
           bottom: const TabBar(
-            isScrollable: true, // is change this for test
-
+            isScrollable: false,
             tabs: [
               Tab(icon: Icon(Icons.groups_outlined), text: 'Teams'),
               Tab(icon: Icon(Icons.calendar_month_outlined), text: 'Matches'),
@@ -33,10 +36,7 @@ class TournamentDetailsPage extends StatelessWidget {
         body: TabBarView(
           children: [
             TeamPage(tournament: tournament),
-            const BuildPlaceholder(
-              icon: Icons.calendar_month_outlined,
-              message: 'No matches yet',
-            ),
+            MatchesTab(tournament: tournament),
             const BuildPlaceholder(
               icon: Icons.emoji_events_outlined,
               message: 'Standings will appear here',

@@ -302,6 +302,21 @@ class DatabaseHelper {
     });
   }
 
+  Future<Player?> getPlayerById(int playerId) async {
+    final db = await database;
+
+    final result = await db.query(
+      _playersTableName,
+      where: '$_playerIdColumn = ?',
+      whereArgs: [playerId],
+      limit: 1,
+    );
+
+    if (result.isEmpty) return null;
+
+    return Player.fromMap(result.first);
+  }
+
   Future<List<Player>> getPlayersByTeamId(int teamId) async {
     final db = await database;
     final List data = await db.query(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tournament_organizer/database/database_helper.dart';
 import 'package:tournament_organizer/pages/home_page.dart';
+import 'package:tournament_organizer/viewmodels/goal_view_model.dart';
 import 'package:tournament_organizer/viewmodels/player_view_model.dart';
 import 'package:tournament_organizer/viewmodels/team_view_model.dart';
 import 'package:tournament_organizer/viewmodels/tournament_view_model.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => PlayerViewModel(databaseServices),
         ),
+        ChangeNotifierProvider(create: (_) => GoalViewModel(databaseServices)),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -34,7 +36,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const HomePage(title: 'Flutter Demo Home Page'),
+        home: const HomePage(title: 'Dawri Manager'),
       ),
     );
   }

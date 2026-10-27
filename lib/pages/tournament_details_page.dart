@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:tournament_organizer/models/tournament.dart';
-import 'package:tournament_organizer/pages/tabs/matches_tab.dart';
+import 'package:tournament_organizer/pages/tabs/matches_page.dart';
 import 'package:tournament_organizer/pages/tabs/team_page.dart';
 import 'package:tournament_organizer/widgets/build_placeholder.dart';
 
@@ -34,7 +34,7 @@ class TournamentDetailsPage extends StatelessWidget {
         body: TabBarView(
           children: [
             TeamPage(tournament: tournament),
-            MatchesTab(tournament: tournament),
+            MatchesPage(tournament: tournament),
             const BuildPlaceholder(
               icon: Icons.emoji_events_outlined,
               message: 'Standings will appear here',

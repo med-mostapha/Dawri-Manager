@@ -455,25 +455,25 @@ class DatabaseHelper {
     });
   }
 
-  Future<int> finishMatch(int matchId) async {
-    final db = await getDatabase();
-
-    return await db.update(
-      _matchesTableName,
-      {'status': MatchStatus.finished.name},
-      where: '$_matchIdColumn = ?',
-      whereArgs: [matchId],
-    );
-  }
-
   Future<int> reopenMatch(int matchId) async {
     final db = await getDatabase();
 
     return await db.update(
       _matchesTableName,
       {'status': MatchStatus.scheduled.name},
-      where: '$_matchIdColumn = ?',
-      whereArgs: [matchId],
+      where: '$_matchIdColumn = ? AND $_matchStatusColumn = ?',
+      whereArgs: [matchId, MatchStatus.finished.name],
+    );
+  }
+
+  Future<int> finishMatch(int matchId) async {
+    final db = await getDatabase();
+
+    return await db.update(
+      _matchesTableName,
+      {'status': MatchStatus.finished.name},
+      where: '$_matchIdColumn = ? AND $_matchStatusColumn = ?',
+      whereArgs: [matchId, MatchStatus.scheduled.name],
     );
   }
 

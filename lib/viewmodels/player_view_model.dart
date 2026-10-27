@@ -88,4 +88,12 @@ class PlayerViewModel extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<Player?> getPlayerById(int playerId) async {
+    try {
+      return await _databaseHelper.getPlayerById(playerId);
+    } catch (e) {
+      return null;
+    }
+  }
 }

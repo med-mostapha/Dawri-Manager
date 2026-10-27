@@ -440,6 +440,28 @@ class DatabaseHelper {
     });
   }
 
+  Future<int> finishMatch(int matchId) async {
+    final db = await getDatabase();
+
+    return await db.update(
+      _matchesTableName,
+      {'status': MatchStatus.finished.name},
+      where: '$_matchIdColumn = ?',
+      whereArgs: [matchId],
+    );
+  }
+
+  Future<int> reopenMatch(int matchId) async {
+    final db = await getDatabase();
+
+    return await db.update(
+      _matchesTableName,
+      {'status': MatchStatus.scheduled.name},
+      where: '$_matchIdColumn = ?',
+      whereArgs: [matchId],
+    );
+  }
+
   // Goal CRUD
   Future<void> _validateGoal(Transaction txn, Goal goal) async {
     final matches = await txn.query(
@@ -483,10 +505,33 @@ class DatabaseHelper {
     }
   }
 
+  Future<void> _validateMatchIsEditable(Transaction txn, int matchId) async {
+    final matches = await txn.query(
+      _matchesTableName,
+      columns: [_matchStatusColumn],
+      where: '$_matchIdColumn = ?',
+      whereArgs: [matchId],
+      limit: 1,
+    );
+
+    if (matches.isEmpty) {
+      throw StateError('Match not found.');
+    }
+
+    final status = matches.first[_matchStatusColumn] as String;
+
+    if (status != MatchStatus.scheduled.name) {
+      throw StateError(
+        'Cannot modify goals of a finished match. Reopen the match first.',
+      );
+    }
+  }
+
   Future<int> insertGoal(Goal goal) async {
     final db = await getDatabase();
 
     return await db.transaction((txn) async {
+      await _validateMatchIsEditable(txn, goal.matchId);
       await _validateGoal(txn, goal);
 
       final goalData = goal.toMap()..remove(_goalIdColumn);
@@ -520,6 +565,7 @@ class DatabaseHelper {
     final db = await getDatabase();
 
     return await db.transaction((txn) async {
+      await _validateMatchIsEditable(txn, goal.matchId);
       await _validateGoal(txn, goal);
 
       final goalData = goal.toMap()..remove(_goalIdColumn);
@@ -537,11 +583,29 @@ class DatabaseHelper {
   Future<int> deleteGoal(int goalId) async {
     final db = await getDatabase();
 
-    return await db.delete(
-      _goalsTableName,
-      where: '$_goalIdColumn = ?',
-      whereArgs: [goalId],
-    );
+    return await db.transaction((txn) async {
+      final goals = await txn.query(
+        _goalsTableName,
+        columns: [_goalMatchIdColumn],
+        where: '$_goalIdColumn = ?',
+        whereArgs: [goalId],
+        limit: 1,
+      );
+
+      if (goals.isEmpty) {
+        return 0;
+      }
+
+      final matchId = goals.first[_goalMatchIdColumn] as int;
+
+      await _validateMatchIsEditable(txn, matchId);
+
+      return await txn.delete(
+        _goalsTableName,
+        where: '$_goalIdColumn = ?',
+        whereArgs: [goalId],
+      );
+    });
   }
 
   Future<int> deleteGoalsByMatch(int matchId) async {

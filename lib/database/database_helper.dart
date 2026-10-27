@@ -345,6 +345,24 @@ class DatabaseHelper {
     );
   }
 
+  Future<void> insertMatches(List<Match> matches) async {
+    if (matches.isEmpty) {
+      return;
+    }
+
+    final db = await getDatabase();
+
+    await db.transaction((txn) async {
+      final batch = txn.batch();
+
+      for (final match in matches) {
+        batch.insert(_matchesTableName, match.toMap()..remove('id'));
+      }
+
+      await batch.commit(noResult: true);
+    });
+  }
+
   Future<List<Match>> getMatchesByTournament(int tournamentId) async {
     final db = await getDatabase();
 

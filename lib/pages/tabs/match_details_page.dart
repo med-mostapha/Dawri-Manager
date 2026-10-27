@@ -6,6 +6,9 @@ import 'package:tournament_organizer/models/goal.dart';
 import 'package:tournament_organizer/models/match.dart';
 import 'package:tournament_organizer/models/team.dart';
 import 'package:tournament_organizer/viewmodels/goal_view_model.dart';
+import 'package:tournament_organizer/viewmodels/player_view_model.dart';
+import 'package:tournament_organizer/widgets/build_placeholder.dart';
+import 'package:tournament_organizer/pages/tabs/add_goal_dialog.dart';
 
 class MatchDetailsPage extends StatefulWidget {
   final Match match;
@@ -111,6 +114,44 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
     );
   }
 
+  Future<void> _openAddGoalDialog() async {
+    if (widget.match.status == MatchStatus.finished) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Reopen the match before adding goals.')),
+      );
+      return;
+    }
+
+    if (_homeTeam == null || _awayTeam == null) {
+      return;
+    }
+
+    await showDialog<bool>(
+      context: context,
+      builder: (context) =>
+          AddGoalDialog(match: widget.match, teams: [_homeTeam!, _awayTeam!]),
+    );
+  }
+
+  Future<void> _openEditGoalDialog(Goal goal) async {
+    if (widget.match.status != MatchStatus.scheduled) {
+      return;
+    }
+
+    if (_homeTeam == null || _awayTeam == null) {
+      return;
+    }
+
+    await showDialog<bool>(
+      context: context,
+      builder: (context) => AddGoalDialog(
+        match: widget.match,
+        teams: [_homeTeam!, _awayTeam!],
+        goal: goal,
+      ),
+    );
+  }
+
   Widget _buildBody({
     required List<Goal> goals,
     required int homeScore,
@@ -131,7 +172,19 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _buildScoreCard(homeScore, awayScore),
-          const SizedBox(height: 24),
+          const SizedBox(height: 16),
+
+          if (widget.match.status == MatchStatus.scheduled)
+            Align(
+              alignment: Alignment.centerRight,
+              child: FilledButton.icon(
+                onPressed: _openAddGoalDialog,
+                icon: const Icon(Icons.add),
+                label: const Text('Add Goal'),
+              ),
+            ),
+
+          const SizedBox(height: 16),
           _buildGoalsHeader(goals.length),
           const SizedBox(height: 8),
           Expanded(child: _buildGoalsList(goals)),
@@ -212,49 +265,105 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
   }
 
   Widget _buildEmptyGoalsState() {
-    return const Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.sports_soccer_outlined, size: 48, color: Colors.grey),
-          SizedBox(height: 12),
-          Text(
-            'No goals recorded yet.',
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.grey),
-          ),
-        ],
-      ),
+    return const BuildPlaceholder(
+      icon: Icons.sports_soccer_outlined,
+      message: 'No goals recorded yet.',
     );
   }
 
   Widget _buildGoalTile(Goal goal) {
-    final teamName = goal.teamId == widget.match.homeTeamId
-        ? _homeTeam!.name
-        : _awayTeam!.name;
+    final isHomeTeam = goal.teamId == widget.match.homeTeamId;
+    final canEdit = widget.match.status == MatchStatus.scheduled;
 
     return FutureBuilder(
-      future: _databaseHelper.getPlayerById(goal.playerId),
+      future: context.read<PlayerViewModel>().getPlayerById(goal.playerId),
       builder: (context, snapshot) {
         final playerName =
             snapshot.data?.name ??
             (snapshot.connectionState == ConnectionState.waiting
-                ? 'Loading player...'
+                ? 'Loading...'
                 : 'Unknown player');
 
-        return Card(
-          elevation: 0,
-          margin: const EdgeInsets.only(bottom: 8),
-          child: ListTile(
-            leading: const Icon(Icons.sports_soccer),
-            title: Text(playerName),
-            subtitle: Text(
-              '$teamName • ${goal.minute == null ? "Minute unknown" : "${goal.minute} min"}',
+        return GestureDetector(
+          onDoubleTap: canEdit ? () => _openEditGoalDialog(goal) : null,
+          onLongPress: canEdit ? () => _confirmDeleteGoal(goal) : null,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 3),
+            child: Row(
+              mainAxisAlignment: isHomeTeam
+                  ? MainAxisAlignment.start
+                  : MainAxisAlignment.end,
+              children: [
+                if (isHomeTeam) ...[
+                  const Icon(Icons.sports_soccer, size: 16),
+                  const SizedBox(width: 6),
+                ],
+                Flexible(
+                  child: Text(
+                    '$playerName ${goal.minute == null ? "—" : "(${goal.minute})"}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                if (!isHomeTeam) ...[
+                  const SizedBox(width: 6),
+                  const Icon(Icons.sports_soccer, size: 16),
+                ],
+              ],
             ),
           ),
         );
       },
     );
+  }
+
+  Future<void> _confirmDeleteGoal(Goal goal) async {
+    if (widget.match.status != MatchStatus.scheduled) {
+      return;
+    }
+
+    final shouldDelete = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Delete Goal?'),
+        content: const Text('Are you sure you want to delete this goal?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: const Text('Cancel'),
+          ),
+          MaterialButton(
+            color: Colors.redAccent,
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: const Text('Delete', style: TextStyle(color: Colors.white)),
+          ),
+        ],
+      ),
+    );
+
+    if (shouldDelete != true || !mounted) {
+      return;
+    }
+
+    final goalId = goal.id;
+    final matchId = widget.match.id;
+
+    if (goalId == null || matchId == null) {
+      return;
+    }
+
+    final success = await context.read<GoalViewModel>().deleteGoal(
+      goalId,
+      matchId,
+    );
+
+    if (!mounted) return;
+
+    if (!success) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Failed to delete goal.')));
+    }
   }
 
   Widget _buildErrorState() {

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:tournament_organizer/database/database_helper.dart';
 import 'package:tournament_organizer/models/tournament.dart';
+import 'package:tournament_organizer/utils/schedule_generator.dart';
 
 class TournamentViewModel extends ChangeNotifier {
   final DatabaseHelper _databaseHelper;
@@ -59,6 +60,49 @@ class TournamentViewModel extends ChangeNotifier {
       return true;
     } catch (e) {
       _error = "Can't update tournament";
+      return false;
+    } finally {
+      notifyListeners();
+    }
+  }
+
+  Future<bool> generateSchedule(Tournament tournament) async {
+    _error = null;
+
+    if (tournament.id == null) {
+      _error = 'Tournament ID is missing.';
+      notifyListeners();
+      return false;
+    }
+
+    try {
+      final existingMatches = await _databaseHelper.getMatchesByTournament(
+        tournament.id!,
+      );
+
+      if (existingMatches.isNotEmpty) {
+        _error = 'The schedule has already been generated.';
+        return false;
+      }
+
+      final teams = await _databaseHelper.getTeamsByTournament(tournament.id!);
+
+      if (teams.length < 2) {
+        _error = 'At least two teams are required.';
+        return false;
+      }
+
+      final matches = ScheduleGenerator.generate(
+        tournamentId: tournament.id!,
+        teamIds: teams.map((team) => team.id!).toList(),
+        matchType: tournament.matchType,
+      );
+
+      await _databaseHelper.insertMatches(matches);
+
+      return true;
+    } catch (e) {
+      _error = 'Failed to generate the schedule.';
       return false;
     } finally {
       notifyListeners();

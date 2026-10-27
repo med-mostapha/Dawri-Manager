@@ -6,6 +6,7 @@ import 'package:tournament_organizer/viewmodels/goal_view_model.dart';
 import 'package:tournament_organizer/viewmodels/player_view_model.dart';
 import 'package:tournament_organizer/viewmodels/standings_view_model.dart';
 import 'package:tournament_organizer/viewmodels/team_view_model.dart';
+import 'package:tournament_organizer/viewmodels/top_scorers_view_model.dart';
 import 'package:tournament_organizer/viewmodels/tournament_view_model.dart';
 
 void main() {
@@ -31,6 +32,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => GoalViewModel(databaseServices)),
         ChangeNotifierProvider(
           create: (_) => StandingsViewModel(databaseServices),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => TopScorersViewModel(databaseServices),
         ),
       ],
       child: MaterialApp(

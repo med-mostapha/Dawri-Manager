@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tournament_organizer/models/tournament.dart';
 import 'package:tournament_organizer/pages/tabs/matches_page.dart';
 import 'package:tournament_organizer/pages/tabs/team_page.dart';
+import 'package:tournament_organizer/pages/tabs/top_scorers_page.dart';
 import 'package:tournament_organizer/widgets/build_placeholder.dart';
 import 'package:tournament_organizer/pages/tabs/standings_page.dart';
 
@@ -37,10 +38,7 @@ class TournamentDetailsPage extends StatelessWidget {
             TeamPage(tournament: tournament),
             MatchesPage(tournament: tournament),
             StandingsPage(tournament: tournament),
-            const BuildPlaceholder(
-              icon: Icons.sports_soccer_outlined,
-              message: 'Top scorers will appear here',
-            ),
+            TopScorersPage(tournament: tournament),
           ],
         ),
       ),

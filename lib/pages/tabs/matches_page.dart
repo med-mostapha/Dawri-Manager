@@ -6,6 +6,7 @@ import 'package:tournament_organizer/models/team.dart';
 import 'package:tournament_organizer/models/tournament.dart';
 import 'package:tournament_organizer/pages/tabs/match_details_page.dart';
 import 'package:tournament_organizer/viewmodels/tournament_view_model.dart';
+import 'package:tournament_organizer/models/goal.dart';
 
 class MatchesPage extends StatefulWidget {
   final Tournament tournament;
@@ -21,7 +22,7 @@ class _MatchesTabState extends State<MatchesPage> {
 
   List<Match> _matches = [];
   Map<int, String> _teamNames = {};
-
+  Map<int, List<Goal>> _goalsByMatch = {};
   bool _isLoading = true;
   bool _isGenerating = false;
   String? _error;
@@ -49,6 +50,22 @@ class _MatchesTabState extends State<MatchesPage> {
       final teams = results[0] as List<Team>;
       final matches = results[1] as List<Match>;
 
+      final matchesWithIds = matches
+          .where((match) => match.id != null)
+          .toList();
+
+      final goalsLists = await Future.wait(
+        matchesWithIds.map(
+          (match) => _databaseHelper.getGoalsByMatch(match.id!),
+        ),
+      );
+
+      final goalsByMatch = <int, List<Goal>>{};
+
+      for (var i = 0; i < matchesWithIds.length; i++) {
+        goalsByMatch[matchesWithIds[i].id!] = goalsLists[i];
+      }
+
       if (!mounted) return;
 
       setState(() {
@@ -58,6 +75,7 @@ class _MatchesTabState extends State<MatchesPage> {
         };
 
         _matches = matches;
+        _goalsByMatch = goalsByMatch;
         _isLoading = false;
       });
     } catch (e) {
@@ -96,10 +114,14 @@ class _MatchesTabState extends State<MatchesPage> {
     }
   }
 
-  void _openMatchDetails(Match match) {
-    Navigator.of(
-      context,
-    ).push(MaterialPageRoute(builder: (_) => MatchDetailsPage(match: match)));
+  Future<void> _openMatchDetails(Match match) async {
+    await Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => MatchDetailsPage(match: match)),
+    );
+
+    if (!mounted) return;
+
+    await _loadData();
   }
 
   Map<int, List<Match>> _groupMatchesByRound() {
@@ -181,6 +203,16 @@ class _MatchesTabState extends State<MatchesPage> {
 
     final isFinished = match.status == MatchStatus.finished;
 
+    final goals = match.id == null ? <Goal>[] : _goalsByMatch[match.id!] ?? [];
+
+    final homeScore = goals
+        .where((goal) => goal.teamId == match.homeTeamId)
+        .length;
+
+    final awayScore = goals
+        .where((goal) => goal.teamId == match.awayTeamId)
+        .length;
+
     return Card(
       elevation: 1,
       margin: const EdgeInsets.only(bottom: 8),
@@ -202,9 +234,12 @@ class _MatchesTabState extends State<MatchesPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Column(
                   children: [
-                    const Text(
-                      'VS',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    Text(
+                      isFinished ? '$homeScore - $awayScore' : 'VS',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
                     const SizedBox(height: 4),
                     Text(

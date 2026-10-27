@@ -24,6 +24,7 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
 
   Team? _homeTeam;
   Team? _awayTeam;
+  late MatchStatus _status;
 
   bool _isLoadingTeams = true;
   String? _error;
@@ -31,6 +32,8 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
   @override
   void initState() {
     super.initState();
+
+    _status = widget.match.status;
 
     _loadTeams();
 
@@ -87,6 +90,76 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
     }
   }
 
+  Future<void> _changeMatchStatus() async {
+    final isFinished = _status == MatchStatus.finished;
+    final newStatus = isFinished ? MatchStatus.scheduled : MatchStatus.finished;
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(isFinished ? 'Reopen Match?' : 'Finish Match?'),
+        content: Text(
+          isFinished
+              ? 'This match will become editable again.'
+              : 'The result will count in the standings and top scorers.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: Text(isFinished ? 'Reopen' : 'Finish'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true || !mounted) return;
+
+    final matchId = widget.match.id;
+
+    if (matchId == null) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Invalid match ID.')));
+      return;
+    }
+
+    try {
+      final changedRows = isFinished
+          ? await _databaseHelper.reopenMatch(matchId)
+          : await _databaseHelper.finishMatch(matchId);
+
+      if (!mounted) return;
+
+      if (changedRows == 0) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Match status was not changed. Please refresh.'),
+          ),
+        );
+        return;
+      }
+
+      setState(() {
+        _status = newStatus;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(isFinished ? 'Match reopened.' : 'Match finished.'),
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to update match status.')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final goalViewModel = context.watch<GoalViewModel>();
@@ -115,7 +188,7 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
   }
 
   Future<void> _openAddGoalDialog() async {
-    if (widget.match.status == MatchStatus.finished) {
+    if (_status == MatchStatus.finished) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Reopen the match before adding goals.')),
       );
@@ -134,7 +207,7 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
   }
 
   Future<void> _openEditGoalDialog(Goal goal) async {
-    if (widget.match.status != MatchStatus.scheduled) {
+    if (_status != MatchStatus.scheduled) {
       return;
     }
 
@@ -174,15 +247,33 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
           _buildScoreCard(homeScore, awayScore),
           const SizedBox(height: 16),
 
-          if (widget.match.status == MatchStatus.scheduled)
-            Align(
-              alignment: Alignment.centerRight,
-              child: FilledButton.icon(
-                onPressed: _openAddGoalDialog,
-                icon: const Icon(Icons.add),
-                label: const Text('Add Goal'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              if (_status == MatchStatus.scheduled)
+                FilledButton.icon(
+                  onPressed: _openAddGoalDialog,
+                  icon: const Icon(Icons.add),
+                  label: const Text('Add Goal'),
+                )
+              else
+                const SizedBox.shrink(),
+
+              OutlinedButton.icon(
+                onPressed: _changeMatchStatus,
+                icon: Icon(
+                  _status == MatchStatus.finished
+                      ? Icons.lock_open
+                      : Icons.flag,
+                ),
+                label: Text(
+                  _status == MatchStatus.finished
+                      ? 'Reopen Match'
+                      : 'Finish Match',
+                ),
               ),
-            ),
+            ],
+          ),
 
           const SizedBox(height: 16),
           _buildGoalsHeader(goals.length),
@@ -194,7 +285,7 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
   }
 
   Widget _buildScoreCard(int homeScore, int awayScore) {
-    final isFinished = widget.match.status == MatchStatus.finished;
+    final isFinished = _status == MatchStatus.finished;
 
     return Card(
       elevation: 1,
@@ -273,7 +364,7 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
 
   Widget _buildGoalTile(Goal goal) {
     final isHomeTeam = goal.teamId == widget.match.homeTeamId;
-    final canEdit = widget.match.status == MatchStatus.scheduled;
+    final canEdit = _status == MatchStatus.scheduled;
 
     return FutureBuilder(
       future: context.read<PlayerViewModel>().getPlayerById(goal.playerId),
@@ -318,7 +409,7 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
   }
 
   Future<void> _confirmDeleteGoal(Goal goal) async {
-    if (widget.match.status != MatchStatus.scheduled) {
+    if (_status != MatchStatus.scheduled) {
       return;
     }
 

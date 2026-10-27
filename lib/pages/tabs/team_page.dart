@@ -26,13 +26,48 @@ class _TeamPageState extends State<TeamPage> {
     });
   }
 
-  void _deleteTeam(Team t) {
+  Future<void> _deleteTeam(Team team) async {
+    if (!await _checkCanModifyTeams()) return;
+
+    if (!mounted) return;
+
     showDeleteDialog(
       context: context,
-      title: 'Delete ${t.name} ?',
-      message: 'Are you sure you want to delete?',
-      onConfirm: () => context.read<TeamViewModel>().deleteTeam(t),
+      title: 'Delete ${team.name}?',
+      message: 'Are you sure you want to delete this team?',
+      onConfirm: () => context.read<TeamViewModel>().deleteTeam(team),
     );
+  }
+
+  Future<bool> _checkCanModifyTeams() async {
+    final canModify = await context.read<TeamViewModel>().canModifyTeams(
+      widget.tournament.id!,
+    );
+
+    if (!mounted) return false;
+
+    if (!canModify) {
+      await showDialog<void>(
+        context: context,
+        builder: (dialogContext) => AlertDialog(
+          title: const Text('Schedule already generated'),
+          content: const Text(
+            'You cannot add, edit, or delete teams after '
+            'generating the schedule.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialogContext),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+
+      return false;
+    }
+
+    return true;
   }
 
   @override
@@ -92,14 +127,18 @@ class _TeamPageState extends State<TeamPage> {
     );
   }
 
-  void _addTeamButton(int tournamentId) {
+  Future<void> _addTeamButton(int tournamentId) async {
+    if (!await _checkCanModifyTeams()) return;
+
+    if (!mounted) return;
+
     showDialog<void>(
       context: context,
       builder: (_) => AddTeamDialog(null, tournamentId: tournamentId),
     );
   }
 
-  void _editTeam(Team team, int tournamentId) {
+  Future<void> _editTeam(Team team, int tournamentId) async {
     showDialog<void>(
       context: context,
       builder: (_) => AddTeamDialog(team, tournamentId: tournamentId),

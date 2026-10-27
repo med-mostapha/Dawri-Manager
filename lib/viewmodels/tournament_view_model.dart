@@ -17,6 +17,11 @@ class TournamentViewModel extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get error => _error;
 
+  void clearError() {
+    _error = null;
+    notifyListeners();
+  }
+
   Future<void> _refreshTournaments() async {
     _tournaments = await _databaseHelper.getTournaments();
   }
@@ -51,15 +56,32 @@ class TournamentViewModel extends ChangeNotifier {
     }
   }
 
-  Future<bool> updateTournament(Tournament t) async {
+  Future<bool> updateTournament(
+    Tournament t, {
+    MatchType? originalMatchType,
+  }) async {
     _error = null;
 
     try {
+      if (t.id == null) {
+        _error = 'Tournament ID is missing.';
+        return false;
+      }
+
+      if (originalMatchType != null && originalMatchType != t.matchType) {
+        final hasMatches = await _databaseHelper.hasMatchesForTournament(t.id!);
+
+        if (hasMatches) {
+          _error = 'You cannot change the match format after generating the schedule.';
+          return false;
+        }
+      }
+
       await _databaseHelper.updateTournament(t);
       await _refreshTournaments();
       return true;
     } catch (e) {
-      _error = "Can't update tournament";
+      _error = "Can't update tournament.";
       return false;
     } finally {
       notifyListeners();

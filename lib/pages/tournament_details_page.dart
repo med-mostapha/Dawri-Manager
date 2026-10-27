@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'package:tournament_organizer/models/tournament.dart';
 import 'package:tournament_organizer/pages/tabs/matches_tab.dart';
 import 'package:tournament_organizer/pages/tabs/team_page.dart';
-import 'package:tournament_organizer/viewmodels/tournament_view_model.dart';
 import 'package:tournament_organizer/widgets/build_placeholder.dart';
 
 class TournamentDetailsPage extends StatelessWidget {

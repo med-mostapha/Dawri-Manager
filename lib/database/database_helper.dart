@@ -333,6 +333,12 @@ class DatabaseHelper {
   }
 
   // Match CRUD
+
+  Future<bool> hasMatchesForTournament(int tournamentId) async {
+    final matches = await getMatchesByTournament(tournamentId);
+    return matches.isNotEmpty;
+  }
+
   Future<int> insertMatch(Match match) async {
     final db = await getDatabase();
 

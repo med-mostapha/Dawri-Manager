@@ -70,6 +70,7 @@ class _AddTournamentDialogState extends State<AddTournamentDialog> {
             createdAt: tournament.createdAt,
             matchType: _matchType,
           ),
+          originalMatchType: tournament.matchType,
         );
       }
 
@@ -78,19 +79,24 @@ class _AddTournamentDialogState extends State<AddTournamentDialog> {
       if (success) {
         Navigator.of(context).pop();
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              widget.tournament == null
-                  ? "Can't add tournament. Please try again."
-                  : "Can't update tournament. Please try again.",
-            ),
+        final error = viewModel.error;
+        viewModel.clearError();
+
+        setState(() => _isSaving = false);
+
+        await showDialog<void>(
+          context: context,
+          builder: (dialogContext) => AlertDialog(
+            title: const Text('Cannot save tournament'),
+            content: Text(error ?? 'Please try again.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(dialogContext).pop(),
+                child: const Text('OK'),
+              ),
+            ],
           ),
         );
-
-        setState(() {
-          _isSaving = false;
-        });
       }
     } catch (e) {
       if (!mounted) return;

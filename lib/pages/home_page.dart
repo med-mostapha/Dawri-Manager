@@ -44,6 +44,13 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: [
+          IconButton(
+            onPressed: () => viewModel.loadTournaments(),
+            tooltip: 'Refresh matches',
+            icon: const Icon(Icons.refresh),
+          ),
+        ],
         // backgroundColor: Theme.of(context).primaryColor,
         // titleTextStyle: TextStyle(color: Colors.white),
       ),
@@ -56,8 +63,34 @@ class _HomePageState extends State<HomePage> {
           viewModel.tournaments,
         )) {
           (true, _, _) => const Center(child: CircularProgressIndicator()),
-          (_, final String e, _) => Center(
-            child: Text(e, style: TextStyle(color: Colors.redAccent)),
+          (_, final String e, _) => ListView(
+            children: [
+              const SizedBox(height: 100),
+              Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.error_outline,
+                      color: Colors.redAccent,
+                      size: 40,
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      e,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(color: Colors.redAccent),
+                    ),
+                    const SizedBox(height: 12),
+                    OutlinedButton.icon(
+                      onPressed: () => viewModel.loadTournaments(),
+                      icon: const Icon(Icons.refresh),
+                      label: const Text('Reload tournaments'),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
           (_, _, final tournament) when tournament.isEmpty => Center(
             child: const BuildPlaceholder(

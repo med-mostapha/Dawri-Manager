@@ -48,6 +48,9 @@ class TeamViewModel extends ChangeNotifier {
   }
 
   Future<bool> addTeam(Team team) async {
+    if (!await _ensureTeamsCanBeModified(team.tournamentId)) {
+      return false;
+    }
     try {
       await _databaseHelper.insertTeam(team);
       await _refreshTeams(team.tournamentId);
@@ -72,6 +75,9 @@ class TeamViewModel extends ChangeNotifier {
   }
 
   Future<int> deleteTeam(Team team) async {
+    if (!await _ensureTeamsCanBeModified(team.tournamentId)) {
+      return 0;
+    }
     _error = null;
 
     if (team.id == null) {
@@ -95,5 +101,23 @@ class TeamViewModel extends ChangeNotifier {
     } finally {
       notifyListeners();
     }
+  }
+
+  Future<bool> canModifyTeams(int tournamentId) async {
+    return !(await _databaseHelper.hasMatchesForTournament(tournamentId));
+  }
+
+  Future<bool> _ensureTeamsCanBeModified(int tournamentId) async {
+    final hasMatches = await _databaseHelper.hasMatchesForTournament(
+      tournamentId,
+    );
+
+    if (hasMatches) {
+      _error = 'Teams cannot be changed after the schedule has been generated.';
+      return false;
+    }
+
+    _error = null;
+    return true;
   }
 }

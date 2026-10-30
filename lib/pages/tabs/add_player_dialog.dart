@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:tournament_organizer/models/player.dart';
 import 'package:tournament_organizer/viewmodels/player_view_model.dart';
 import 'package:flutter/services.dart';
+import 'package:tournament_organizer/generated/l10n.dart';
 
 class AddPlayerDialog extends StatefulWidget {
   final int teamId;
@@ -44,7 +45,7 @@ class _AddPlayerDialogState extends State<AddPlayerDialog> {
 
     if (name.isEmpty) {
       setState(() {
-        _validationError = 'Player name is required.';
+        _validationError = S.of(context).playerNameRequired;
       });
       return;
     }
@@ -52,7 +53,7 @@ class _AddPlayerDialogState extends State<AddPlayerDialog> {
 
     if (ageText.isNotEmpty && (age == null || age < 1 || age > 99)) {
       setState(() {
-        _validationError = 'Age must be between 1 and 99.';
+        _validationError = S.of(context).invalidPlayerAge;
       });
       return;
     }
@@ -84,8 +85,8 @@ class _AddPlayerDialogState extends State<AddPlayerDialog> {
       setState(() {
         _isSaving = false;
         _validationError = widget.player == null
-            ? "Can't add player. Please try again."
-            : "Can't update player. Please try again.";
+            ? S.of(context).addPlayerFailed
+            : S.of(context).updatePlayerFailed;
       });
     }
   }
@@ -93,11 +94,16 @@ class _AddPlayerDialogState extends State<AddPlayerDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(widget.player == null ? 'Add Player' : 'Edit Player'),
+      title: Text(
+        widget.player == null
+            ? S.of(context).addPlayer
+            : S.of(context).editPlayer,
+      ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           TextField(
+            inputFormatters: [LengthLimitingTextInputFormatter(30)],
             onChanged: (_) {
               if (_validationError != null) {
                 setState(() {
@@ -108,9 +114,9 @@ class _AddPlayerDialogState extends State<AddPlayerDialog> {
             controller: _nameController,
             autofocus: true,
             textCapitalization: TextCapitalization.words,
-            decoration: const InputDecoration(
-              labelText: 'Player name',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: S.of(context).playerName,
+              border: const OutlineInputBorder(),
             ),
             onSubmitted: (_) => _savePlayer(),
           ),
@@ -129,10 +135,10 @@ class _AddPlayerDialogState extends State<AddPlayerDialog> {
             },
             controller: _ageController,
             keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              labelText: 'Age (optional)',
-              hintText: 'Unknown',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: S.of(context).playerAgeOptional,
+              hintText: S.of(context).unknown,
+              border: const OutlineInputBorder(),
             ),
           ),
           if (_validationError != null) ...[
@@ -147,7 +153,7 @@ class _AddPlayerDialogState extends State<AddPlayerDialog> {
       actions: [
         TextButton(
           onPressed: _isSaving ? null : () => Navigator.of(context).pop(),
-          child: Text(widget.player == null ? 'Create' : 'Save Changes'),
+          child: Text(S.of(context).cancel),
         ),
         FilledButton(
           onPressed: _isSaving ? null : _savePlayer,
@@ -157,7 +163,11 @@ class _AddPlayerDialogState extends State<AddPlayerDialog> {
                   height: 18,
                   child: CircularProgressIndicator(strokeWidth: 2),
                 )
-              : const Text('Create'),
+              : Text(
+                  widget.player == null
+                      ? S.of(context).create
+                      : S.of(context).saveChanges,
+                ),
         ),
       ],
     );

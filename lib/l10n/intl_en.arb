@@ -8,5 +8,27 @@
         "type": "int"
       }
     }
-  }
+  },
+  "playerAge": "Age: {age}",
+  "@playerAge": {
+    "placeholders": {
+      "age": {
+        "type": "int"
+      }
+    }
+  },
+  "noPlayersYet": "No players yet",
+  "addPlayer": "Add Player",
+  "editPlayer": "Edit Player",
+  "playerName": "Player name",
+  "playerAgeOptional": "Age (optional)",
+  "unknown": "Unknown",
+  "playerNameRequired": "Player name is required.",
+  "invalidPlayerAge": "Age must be between 1 and 99.",
+  "cancel": "Cancel",
+  "create": "Create",
+  "saveChanges": "Save Changes",
+  "addPlayerFailed": "Can't add player. Please try again.",
+  "updatePlayerFailed": "Can't update player. Please try again.",
+  "deletePlayer": "Delete player"
 }

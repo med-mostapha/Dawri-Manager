@@ -20,12 +20,37 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(count) => "Players (${count})";
+  static String m0(age) => "Age: ${age}";
+
+  static String m1(count) => "Players (${count})";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "addPlayer": MessageLookupByLibrary.simpleMessage("Add Player"),
+    "addPlayerFailed": MessageLookupByLibrary.simpleMessage(
+      "Can\'t add player. Please try again.",
+    ),
+    "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+    "create": MessageLookupByLibrary.simpleMessage("Create"),
+    "deletePlayer": MessageLookupByLibrary.simpleMessage("Delete player"),
+    "editPlayer": MessageLookupByLibrary.simpleMessage("Edit Player"),
+    "invalidPlayerAge": MessageLookupByLibrary.simpleMessage(
+      "Age must be between 1 and 99.",
+    ),
+    "noPlayersYet": MessageLookupByLibrary.simpleMessage("No players yet"),
     "pageHomeTitle": MessageLookupByLibrary.simpleMessage("Dawri Manager"),
+    "playerAge": m0,
+    "playerAgeOptional": MessageLookupByLibrary.simpleMessage("Age (optional)"),
+    "playerName": MessageLookupByLibrary.simpleMessage("Player name"),
+    "playerNameRequired": MessageLookupByLibrary.simpleMessage(
+      "Player name is required.",
+    ),
     "players": MessageLookupByLibrary.simpleMessage("Players"),
-    "playersCount": m0,
+    "playersCount": m1,
+    "saveChanges": MessageLookupByLibrary.simpleMessage("Save Changes"),
+    "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),
+    "updatePlayerFailed": MessageLookupByLibrary.simpleMessage(
+      "Can\'t update player. Please try again.",
+    ),
   };
 }

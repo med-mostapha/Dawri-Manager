@@ -8,5 +8,27 @@
         "type": "int"
       }
     }
-  }
+  },
+  "playerAge": "العمر: {age}",
+  "@playerAge": {
+    "placeholders": {
+      "age": {
+        "type": "int"
+      }
+    }
+  },
+  "noPlayersYet": "لا يوجد لاعبون حتى الآن",
+  "addPlayer": "إضافة لاعب",
+  "editPlayer": "تعديل لاعب",
+  "playerName": "اسم اللاعب",
+  "playerAgeOptional": "العمر (اختياري)",
+  "unknown": "غير معروف",
+  "playerNameRequired": "اسم اللاعب مطلوب.",
+  "invalidPlayerAge": "يجب أن يكون العمر بين 1 و99.",
+  "cancel": "إلغاء",
+  "create": "إنشاء",
+  "saveChanges": "حفظ التغييرات",
+  "addPlayerFailed": "تعذرت إضافة اللاعب. حاول مجددًا.",
+  "updatePlayerFailed": "تعذر تحديث اللاعب. حاول مجددًا.",
+  "deletePlayer": "حذف اللاعب"
 }

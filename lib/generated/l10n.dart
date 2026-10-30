@@ -78,6 +78,121 @@ class S {
       args: [count],
     );
   }
+
+  /// `Age: {age}`
+  String playerAge(int age) {
+    return Intl.message('Age: $age', name: 'playerAge', desc: '', args: [age]);
+  }
+
+  /// `No players yet`
+  String get noPlayersYet {
+    return Intl.message(
+      'No players yet',
+      name: 'noPlayersYet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Player`
+  String get addPlayer {
+    return Intl.message('Add Player', name: 'addPlayer', desc: '', args: []);
+  }
+
+  /// `Edit Player`
+  String get editPlayer {
+    return Intl.message('Edit Player', name: 'editPlayer', desc: '', args: []);
+  }
+
+  /// `Player name`
+  String get playerName {
+    return Intl.message('Player name', name: 'playerName', desc: '', args: []);
+  }
+
+  /// `Age (optional)`
+  String get playerAgeOptional {
+    return Intl.message(
+      'Age (optional)',
+      name: 'playerAgeOptional',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unknown`
+  String get unknown {
+    return Intl.message('Unknown', name: 'unknown', desc: '', args: []);
+  }
+
+  /// `Player name is required.`
+  String get playerNameRequired {
+    return Intl.message(
+      'Player name is required.',
+      name: 'playerNameRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Age must be between 1 and 99.`
+  String get invalidPlayerAge {
+    return Intl.message(
+      'Age must be between 1 and 99.',
+      name: 'invalidPlayerAge',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
+  }
+
+  /// `Create`
+  String get create {
+    return Intl.message('Create', name: 'create', desc: '', args: []);
+  }
+
+  /// `Save Changes`
+  String get saveChanges {
+    return Intl.message(
+      'Save Changes',
+      name: 'saveChanges',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Can't add player. Please try again.`
+  String get addPlayerFailed {
+    return Intl.message(
+      'Can\'t add player. Please try again.',
+      name: 'addPlayerFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Can't update player. Please try again.`
+  String get updatePlayerFailed {
+    return Intl.message(
+      'Can\'t update player. Please try again.',
+      name: 'updatePlayerFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete player`
+  String get deletePlayer {
+    return Intl.message(
+      'Delete player',
+      name: 'deletePlayer',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -20,12 +20,41 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ar';
 
-  static String m0(count) => "عدد اللاعبين: ${count}";
+  static String m0(age) => "العمر: ${age}";
+
+  static String m1(count) => "عدد اللاعبين: ${count}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "addPlayer": MessageLookupByLibrary.simpleMessage("إضافة لاعب"),
+    "addPlayerFailed": MessageLookupByLibrary.simpleMessage(
+      "تعذرت إضافة اللاعب. حاول مجددًا.",
+    ),
+    "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
+    "create": MessageLookupByLibrary.simpleMessage("إنشاء"),
+    "deletePlayer": MessageLookupByLibrary.simpleMessage("حذف اللاعب"),
+    "editPlayer": MessageLookupByLibrary.simpleMessage("تعديل لاعب"),
+    "invalidPlayerAge": MessageLookupByLibrary.simpleMessage(
+      "يجب أن يكون العمر بين 1 و99.",
+    ),
+    "noPlayersYet": MessageLookupByLibrary.simpleMessage(
+      "لا يوجد لاعبون حتى الآن",
+    ),
     "pageHomeTitle": MessageLookupByLibrary.simpleMessage("مدير الدوري"),
+    "playerAge": m0,
+    "playerAgeOptional": MessageLookupByLibrary.simpleMessage(
+      "العمر (اختياري)",
+    ),
+    "playerName": MessageLookupByLibrary.simpleMessage("اسم اللاعب"),
+    "playerNameRequired": MessageLookupByLibrary.simpleMessage(
+      "اسم اللاعب مطلوب.",
+    ),
     "players": MessageLookupByLibrary.simpleMessage("اللاعبون"),
-    "playersCount": m0,
+    "playersCount": m1,
+    "saveChanges": MessageLookupByLibrary.simpleMessage("حفظ التغييرات"),
+    "unknown": MessageLookupByLibrary.simpleMessage("غير معروف"),
+    "updatePlayerFailed": MessageLookupByLibrary.simpleMessage(
+      "تعذر تحديث اللاعب. حاول مجددًا.",
+    ),
   };
 }

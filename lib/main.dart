@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: S.delegate.supportedLocales,
-        locale: Locale('en'),
+        locale: Locale('ar'),
         debugShowCheckedModeBanner: false,
         title: 'Dawri Manager',
         theme: ThemeData(

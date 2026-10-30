@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:tournament_organizer/generated/l10n.dart';
 import 'package:tournament_organizer/models/team.dart';
 
 import 'package:tournament_organizer/viewmodels/team_view_model.dart';
@@ -41,7 +43,7 @@ class _AddTournamentDialogState extends State<AddTeamDialog> {
 
     if (name.isEmpty) {
       setState(() {
-        _nameError = 'Please enter a team name.';
+        _nameError = S.of(context).teamNameRequired;
       });
       return;
     }
@@ -79,8 +81,7 @@ class _AddTournamentDialogState extends State<AddTeamDialog> {
       } else {
         setState(() {
           _isSaving = false;
-          _saveError =
-              'A team with this name may already exist in this tournament.';
+          _saveError = S.of(context).duplicateTeamName;
         });
       }
     } catch (e) {
@@ -90,28 +91,30 @@ class _AddTournamentDialogState extends State<AddTeamDialog> {
         _isSaving = false;
       });
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("An unexpected error occurred.")),
-      );
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(S.of(context).unexpectedError)));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(widget.team == null ? 'Add Team' : 'Edit Team'),
+      title: Text(
+        widget.team == null ? S.of(context).addTeam : S.of(context).editTeam,
+      ),
 
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextField(
+            inputFormatters: [LengthLimitingTextInputFormatter(30)],
             controller: _nameController,
             autofocus: true,
             textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
-              hintText: 'Team name',
+              hintText: S.of(context).teamName,
               errorText: _nameError,
             ),
             onChanged: (value) {
@@ -145,7 +148,7 @@ class _AddTournamentDialogState extends State<AddTeamDialog> {
       actions: [
         TextButton(
           onPressed: _isSaving ? null : () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: Text(S.of(context).cancel),
         ),
         FilledButton(
           onPressed: _isSaving ? null : _saveTeam,
@@ -155,7 +158,11 @@ class _AddTournamentDialogState extends State<AddTeamDialog> {
                   height: 18,
                   child: CircularProgressIndicator(strokeWidth: 2),
                 )
-              : Text(widget.team == null ? 'Create' : 'Save Changes'),
+              : Text(
+                  widget.team == null
+                      ? S.of(context).create
+                      : S.of(context).saveChanges,
+                ),
         ),
       ],
     );

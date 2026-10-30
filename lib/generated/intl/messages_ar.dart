@@ -20,9 +20,13 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ar';
 
-  static String m0(age) => "العمر: ${age}";
+  static String m0(teamName) => "حذف ${teamName}؟";
 
-  static String m1(count) => "عدد اللاعبين: ${count}";
+  static String m1(age) => "العمر: ${age}";
+
+  static String m2(count) => "عدد اللاعبين: ${count}";
+
+  static String m3(count) => "عدد الفرق: ${count}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -30,28 +34,59 @@ class MessageLookup extends MessageLookupByLibrary {
     "addPlayerFailed": MessageLookupByLibrary.simpleMessage(
       "تعذرت إضافة اللاعب. حاول مجددًا.",
     ),
+    "addTeam": MessageLookupByLibrary.simpleMessage("إضافة فريق"),
     "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
+    "cannotModifyTeamsAfterSchedule": MessageLookupByLibrary.simpleMessage(
+      "لا يمكنك إضافة الفرق أو تعديلها أو حذفها بعد إنشاء جدول المباريات.",
+    ),
+    "confirmDeletePlayer": MessageLookupByLibrary.simpleMessage(
+      "هل أنت متأكد أنك تريد حذف هذا لاعب ؟",
+    ),
+    "confirmDeleteTeam": MessageLookupByLibrary.simpleMessage(
+      "هل أنت متأكد أنك تريد حذف هذا الفريق؟",
+    ),
     "create": MessageLookupByLibrary.simpleMessage("إنشاء"),
     "deletePlayer": MessageLookupByLibrary.simpleMessage("حذف اللاعب"),
+    "deleteTeamTitle": m0,
+    "duplicateTeamName": MessageLookupByLibrary.simpleMessage(
+      "يوجد فريق بهذا الاسم في هذه البطولة بالفعل.",
+    ),
     "editPlayer": MessageLookupByLibrary.simpleMessage("تعديل لاعب"),
+    "editTeam": MessageLookupByLibrary.simpleMessage("تعديل فريق"),
     "invalidPlayerAge": MessageLookupByLibrary.simpleMessage(
       "يجب أن يكون العمر بين 1 و99.",
     ),
     "noPlayersYet": MessageLookupByLibrary.simpleMessage(
       "لا يوجد لاعبون حتى الآن",
     ),
+    "noTeamYet": MessageLookupByLibrary.simpleMessage(
+      "لا يوجد لاعبون حتى الآن",
+    ),
+    "ok": MessageLookupByLibrary.simpleMessage("حسنًا"),
     "pageHomeTitle": MessageLookupByLibrary.simpleMessage("مدير الدوري"),
-    "playerAge": m0,
+    "playerAge": m1,
     "playerAgeOptional": MessageLookupByLibrary.simpleMessage(
       "العمر (اختياري)",
     ),
+    "playerAgeText": MessageLookupByLibrary.simpleMessage("العمر"),
     "playerName": MessageLookupByLibrary.simpleMessage("اسم اللاعب"),
     "playerNameRequired": MessageLookupByLibrary.simpleMessage(
       "اسم اللاعب مطلوب.",
     ),
     "players": MessageLookupByLibrary.simpleMessage("اللاعبون"),
-    "playersCount": m1,
+    "playersCount": m2,
     "saveChanges": MessageLookupByLibrary.simpleMessage("حفظ التغييرات"),
+    "scheduleAlreadyGenerated": MessageLookupByLibrary.simpleMessage(
+      "تم إنشاء جدول المباريات بالفعل",
+    ),
+    "teamName": MessageLookupByLibrary.simpleMessage("اسم الفريق"),
+    "teamNameRequired": MessageLookupByLibrary.simpleMessage(
+      "يرجى إدخال اسم الفريق.",
+    ),
+    "teamsCount": m3,
+    "unexpectedError": MessageLookupByLibrary.simpleMessage(
+      "حدث خطأ غير متوقع.",
+    ),
     "unknown": MessageLookupByLibrary.simpleMessage("غير معروف"),
     "updatePlayerFailed": MessageLookupByLibrary.simpleMessage(
       "تعذر تحديث اللاعب. حاول مجددًا.",

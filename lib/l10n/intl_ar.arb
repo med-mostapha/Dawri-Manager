@@ -17,11 +17,13 @@
       }
     }
   },
+  "confirmDeletePlayer": "هل أنت متأكد أنك تريد حذف هذا لاعب ؟",
   "noPlayersYet": "لا يوجد لاعبون حتى الآن",
   "addPlayer": "إضافة لاعب",
   "editPlayer": "تعديل لاعب",
   "playerName": "اسم اللاعب",
   "playerAgeOptional": "العمر (اختياري)",
+  "playerAgeText": "العمر",
   "unknown": "غير معروف",
   "playerNameRequired": "اسم اللاعب مطلوب.",
   "invalidPlayerAge": "يجب أن يكون العمر بين 1 و99.",
@@ -30,5 +32,32 @@
   "saveChanges": "حفظ التغييرات",
   "addPlayerFailed": "تعذرت إضافة اللاعب. حاول مجددًا.",
   "updatePlayerFailed": "تعذر تحديث اللاعب. حاول مجددًا.",
-  "deletePlayer": "حذف اللاعب"
+  "deletePlayer": "حذف اللاعب",
+  "teamsCount": "عدد الفرق: {count}",
+  "@teamsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noTeamYet": "لا يوجد لاعبون حتى الآن",
+  "addTeam": "إضافة فريق",
+  "editTeam": "تعديل فريق",
+  "teamName": "اسم الفريق",
+  "teamNameRequired": "يرجى إدخال اسم الفريق.",
+  "duplicateTeamName": "يوجد فريق بهذا الاسم في هذه البطولة بالفعل.",
+  "unexpectedError": "حدث خطأ غير متوقع.",
+  "deleteTeamTitle": "حذف {teamName}؟",
+  "@deleteTeamTitle": {
+    "placeholders": {
+      "teamName": {
+        "type": "String"
+      }
+    }
+  },
+  "confirmDeleteTeam": "هل أنت متأكد أنك تريد حذف هذا الفريق؟",
+  "scheduleAlreadyGenerated": "تم إنشاء جدول المباريات بالفعل",
+  "cannotModifyTeamsAfterSchedule": "لا يمكنك إضافة الفرق أو تعديلها أو حذفها بعد إنشاء جدول المباريات.",
+  "ok": "حسنًا"
 }

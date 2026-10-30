@@ -32,8 +32,8 @@ class _PlayerPageState extends State<PlayerPage> {
   void _deletePlayer(Player player) {
     showDeleteDialog(
       context: context,
-      title: 'Delete ${player.name}?',
-      message: 'Are you sure you want to delete this player?',
+      title: '${S.of(context).deletePlayer} ${player.name}?',
+      message: S.of(context).confirmDeletePlayer,
       onConfirm: () async {
         await context.read<PlayerViewModel>().deletePlayer(player);
       },
@@ -53,9 +53,9 @@ class _PlayerPageState extends State<PlayerPage> {
         (_, final String error, _) => Center(
           child: Text(error, style: const TextStyle(color: Colors.redAccent)),
         ),
-        (_, _, final players) when players.isEmpty => const BuildPlaceholder(
+        (_, _, final players) when players.isEmpty => BuildPlaceholder(
           icon: Icons.person_outline,
-          message: 'No players yet',
+          message: S.of(context).noPlayersYet,
         ),
 
         (_, _, final players) => RefreshIndicator(
@@ -88,17 +88,19 @@ class _PlayerPageState extends State<PlayerPage> {
                       ),
                       subtitle: player.age == null
                           ? null
-                          : Text('Age: ${player.age}'),
+                          : Text(
+                              '${S.of(context).playerAgeText}: ${player.age}',
+                            ),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                            tooltip: 'Edit player',
+                            tooltip: S.of(context).editPlayer,
                             onPressed: () => _editPlayer(player),
                             icon: const Icon(Icons.edit_outlined),
                           ),
                           IconButton(
-                            tooltip: 'Delete player',
+                            tooltip: S.of(context).deletePlayer,
                             onPressed: () => _deletePlayer(player),
                             icon: const Icon(
                               Icons.delete_outline,
@@ -123,7 +125,7 @@ class _PlayerPageState extends State<PlayerPage> {
           );
         },
         icon: const Icon(Icons.add),
-        label: const Text('Add Player'),
+        label: Text(S.of(context).addPlayer),
       ),
     );
   }

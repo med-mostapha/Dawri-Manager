@@ -84,6 +84,16 @@ class S {
     return Intl.message('Age: $age', name: 'playerAge', desc: '', args: [age]);
   }
 
+  /// `Are you sure you want to delete this player?`
+  String get confirmDeletePlayer {
+    return Intl.message(
+      'Are you sure you want to delete this player?',
+      name: 'confirmDeletePlayer',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `No players yet`
   String get noPlayersYet {
     return Intl.message(
@@ -117,6 +127,11 @@ class S {
       desc: '',
       args: [],
     );
+  }
+
+  /// `Age`
+  String get playerAgeText {
+    return Intl.message('Age', name: 'playerAgeText', desc: '', args: []);
   }
 
   /// `Unknown`
@@ -192,6 +207,111 @@ class S {
       desc: '',
       args: [],
     );
+  }
+
+  /// `Teams ({count})`
+  String teamsCount(int count) {
+    return Intl.message(
+      'Teams ($count)',
+      name: 'teamsCount',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `No Teams Yet`
+  String get noTeamYet {
+    return Intl.message('No Teams Yet', name: 'noTeamYet', desc: '', args: []);
+  }
+
+  /// `Add Team`
+  String get addTeam {
+    return Intl.message('Add Team', name: 'addTeam', desc: '', args: []);
+  }
+
+  /// `Edit Team`
+  String get editTeam {
+    return Intl.message('Edit Team', name: 'editTeam', desc: '', args: []);
+  }
+
+  /// `Team name`
+  String get teamName {
+    return Intl.message('Team name', name: 'teamName', desc: '', args: []);
+  }
+
+  /// `Please enter a team name.`
+  String get teamNameRequired {
+    return Intl.message(
+      'Please enter a team name.',
+      name: 'teamNameRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A team with this name may already exist in this tournament.`
+  String get duplicateTeamName {
+    return Intl.message(
+      'A team with this name may already exist in this tournament.',
+      name: 'duplicateTeamName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An unexpected error occurred.`
+  String get unexpectedError {
+    return Intl.message(
+      'An unexpected error occurred.',
+      name: 'unexpectedError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete {teamName}?`
+  String deleteTeamTitle(String teamName) {
+    return Intl.message(
+      'Delete $teamName?',
+      name: 'deleteTeamTitle',
+      desc: '',
+      args: [teamName],
+    );
+  }
+
+  /// `Are you sure you want to delete this team?`
+  String get confirmDeleteTeam {
+    return Intl.message(
+      'Are you sure you want to delete this team?',
+      name: 'confirmDeleteTeam',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Schedule already generated`
+  String get scheduleAlreadyGenerated {
+    return Intl.message(
+      'Schedule already generated',
+      name: 'scheduleAlreadyGenerated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You cannot add, edit, or delete teams after generating the schedule.`
+  String get cannotModifyTeamsAfterSchedule {
+    return Intl.message(
+      'You cannot add, edit, or delete teams after generating the schedule.',
+      name: 'cannotModifyTeamsAfterSchedule',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OK`
+  String get ok {
+    return Intl.message('OK', name: 'ok', desc: '', args: []);
   }
 }
 

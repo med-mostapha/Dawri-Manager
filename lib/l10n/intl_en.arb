@@ -17,11 +17,13 @@
       }
     }
   },
+  "confirmDeletePlayer": "Are you sure you want to delete this player?",
   "noPlayersYet": "No players yet",
   "addPlayer": "Add Player",
   "editPlayer": "Edit Player",
   "playerName": "Player name",
   "playerAgeOptional": "Age (optional)",
+  "playerAgeText": "Age",
   "unknown": "Unknown",
   "playerNameRequired": "Player name is required.",
   "invalidPlayerAge": "Age must be between 1 and 99.",
@@ -30,5 +32,32 @@
   "saveChanges": "Save Changes",
   "addPlayerFailed": "Can't add player. Please try again.",
   "updatePlayerFailed": "Can't update player. Please try again.",
-  "deletePlayer": "Delete player"
+  "deletePlayer": "Delete player",
+  "teamsCount": "Teams ({count})",
+  "@teamsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noTeamYet": "No Teams Yet",
+  "addTeam": "Add Team",
+  "editTeam": "Edit Team",
+  "teamName": "Team name",
+  "teamNameRequired": "Please enter a team name.",
+  "duplicateTeamName": "A team with this name may already exist in this tournament.",
+  "unexpectedError": "An unexpected error occurred.",
+  "deleteTeamTitle": "Delete {teamName}?",
+  "@deleteTeamTitle": {
+    "placeholders": {
+      "teamName": {
+        "type": "String"
+      }
+    }
+  },
+  "confirmDeleteTeam": "Are you sure you want to delete this team?",
+  "scheduleAlreadyGenerated": "Schedule already generated",
+  "cannotModifyTeamsAfterSchedule": "You cannot add, edit, or delete teams after generating the schedule.",
+  "ok": "OK"
 }

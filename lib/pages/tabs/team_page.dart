@@ -83,39 +83,50 @@ class _TeamPageState extends State<TeamPage> {
           icon: Icons.groups_outlined,
           message: "No teams yet",
         ),
-        (_, _, final teams) => ListView.builder(
-          padding: const EdgeInsets.all(16),
-          itemCount: teams.length,
-          itemBuilder: (context, index) {
-            return Card(
-              elevation: 1,
-              margin: const EdgeInsets.only(bottom: 10),
-              child: ListTile(
-                leading: const CircleAvatar(
-                  backgroundColor: Color.fromARGB(255, 178, 134, 248),
-                  child: Icon(Icons.shield_outlined, color: Colors.white),
-                ),
-                title: Text(
-                  teams[index].name,
-                  style: const TextStyle(fontWeight: FontWeight.w600),
-                ),
-                subtitle: Text('Team ${index + 1}'),
-                trailing: IconButton(
-                  onPressed: () => _deleteTeam(teams[index]),
-                  icon: Icon(Icons.delete_outline, color: Colors.redAccent),
-                ),
-                onLongPress: () =>
-                    _editTeam(teams[index], widget.tournament.id!),
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => PlayerPage(team: teams[index]),
-                    ),
-                  );
-                },
-              ),
-            );
+        (_, _, final teams) => RefreshIndicator(
+          onRefresh: () async {
+            await viewModel.loadTeams(widget.tournament.id!);
           },
+          child: ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: teams.length,
+            itemBuilder: (context, index) {
+              return Card(
+                elevation: 1,
+                margin: const EdgeInsets.only(bottom: 10),
+                child: ListTile(
+                  leading: const CircleAvatar(
+                    backgroundColor: Color.fromARGB(255, 178, 134, 248),
+                    child: Icon(Icons.shield_outlined, color: Colors.white),
+                  ),
+                  title: Text(
+                    teams[index].name,
+                    style: const TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                  subtitle: Text(
+                    '${viewModel.playerCount(teams[index].id!)} Players',
+                  ),
+                  trailing: IconButton(
+                    onPressed: () => _deleteTeam(teams[index]),
+                    icon: Icon(Icons.delete_outline, color: Colors.redAccent),
+                  ),
+                  onLongPress: () =>
+                      _editTeam(teams[index], widget.tournament.id!),
+                  onTap: () async {
+                    await Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => PlayerPage(team: teams[index]),
+                      ),
+                    );
+
+                    if (!mounted) return;
+
+                    await viewModel.loadTeams(widget.tournament.id!);
+                  },
+                ),
+              );
+            },
+          ),
         ),
       },
 

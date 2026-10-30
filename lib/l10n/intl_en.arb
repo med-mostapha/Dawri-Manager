@@ -1,3 +1,12 @@
 {
-  "pageHomeTitle": "Dawri Manager"
+  "pageHomeTitle": "Dawri Manager",
+  "players": "Players",
+  "playersCount": "Players ({count})",
+  "@playersCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

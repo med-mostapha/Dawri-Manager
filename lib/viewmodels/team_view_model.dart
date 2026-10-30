@@ -8,10 +8,12 @@ class TeamViewModel extends ChangeNotifier {
   TeamViewModel(this._databaseHelper);
 
   List<Team> _teams = [];
+  Map<int, int> _playerCounts = {};
   bool _isLoading = false;
   String? _error;
 
   List<Team> get teams => List.unmodifiable(_teams);
+  int playerCount(int teamId) => _playerCounts[teamId] ?? 0;
 
   bool get isLoading => _isLoading;
   String? get error => _error;
@@ -31,10 +33,12 @@ class TeamViewModel extends ChangeNotifier {
 
     try {
       final teams = await _databaseHelper.getTeamsByTournament(tournamentId);
+      final playerCounts = await _databaseHelper.getPlayerCountsByTeam();
 
       if (requestId != _loadRequestId) return;
 
       _teams = teams;
+      _playerCounts = playerCounts;
     } catch (e) {
       if (requestId != _loadRequestId) return;
 

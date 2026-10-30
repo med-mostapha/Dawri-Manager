@@ -63,6 +63,21 @@ class S {
       args: [],
     );
   }
+
+  /// `Players`
+  String get players {
+    return Intl.message('Players', name: 'players', desc: '', args: []);
+  }
+
+  /// `Players ({count})`
+  String playersCount(int count) {
+    return Intl.message(
+      'Players ($count)',
+      name: 'playersCount',
+      desc: '',
+      args: [count],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

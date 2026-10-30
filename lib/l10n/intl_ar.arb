@@ -1,3 +1,12 @@
 {
-  "pageHomeTitle": "مدير الدوري"
+  "pageHomeTitle": "مدير الدوري",
+  "players": "اللاعبون",
+  "playersCount": "عدد اللاعبين: {count}",
+  "@playersCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

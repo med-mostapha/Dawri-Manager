@@ -317,6 +317,21 @@ class DatabaseHelper {
     return Player.fromMap(result.first);
   }
 
+  Future<Map<int, int>> getPlayerCountsByTeam() async {
+    final db = await database;
+
+    final result = await db.rawQuery('''
+    SELECT $_playerTeamIdColumn, COUNT(*) AS player_count
+    FROM $_playersTableName
+    GROUP BY $_playerTeamIdColumn
+  ''');
+
+    return {
+      for (final row in result)
+        row[_playerTeamIdColumn] as int: row['player_count'] as int,
+    };
+  }
+
   Future<List<Player>> getPlayersByTeamId(int teamId) async {
     final db = await database;
     final List data = await db.query(

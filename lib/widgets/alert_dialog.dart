@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tournament_organizer/generated/l10n.dart';
 
 Future<void> showDeleteDialog({
   required BuildContext context,
@@ -14,7 +15,7 @@ Future<void> showDeleteDialog({
         content: Text(message),
         actions: <Widget>[
           TextButton(
-            child: const Text('Close'),
+            child: Text(S.of(context).cancel),
             onPressed: () => Navigator.of(context).pop(),
           ),
           ElevatedButton(
@@ -22,7 +23,7 @@ Future<void> showDeleteDialog({
               backgroundColor: Colors.red,
               foregroundColor: Colors.white,
             ),
-            child: const Text('Delete'),
+            child: Text(S.of(context).delete),
             onPressed: () async {
               Navigator.of(context).pop();
               await onConfirm();

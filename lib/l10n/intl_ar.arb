@@ -27,6 +27,7 @@
   "unknown": "غير معروف",
   "playerNameRequired": "اسم اللاعب مطلوب.",
   "invalidPlayerAge": "يجب أن يكون العمر بين 1 و99.",
+  "delete": "حذف",
   "cancel": "إلغاء",
   "create": "إنشاء",
   "saveChanges": "حفظ التغييرات",
@@ -59,5 +60,30 @@
   "confirmDeleteTeam": "هل أنت متأكد أنك تريد حذف هذا الفريق؟",
   "scheduleAlreadyGenerated": "تم إنشاء جدول المباريات بالفعل",
   "cannotModifyTeamsAfterSchedule": "لا يمكنك إضافة الفرق أو تعديلها أو حذفها بعد إنشاء جدول المباريات.",
-  "ok": "حسنًا"
+  "ok": "حسنًا",
+  "noMatchesYet": "لا توجد مباريات حتى الآن",
+  "addTwoTeamsToGenerateSchedule": "أضف فريقين على الأقل لإنشاء جدول المباريات.",
+  "generating": "جارٍ إنشاء الجدول...",
+  "generateSchedule": "إنشاء جدول المباريات",
+  "retry": "إعادة المحاولة",
+  "matchesCount": "عدد المباريات: {count}",
+  "@matchesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "refresh": "تحديث",
+  "roundTitle": "الجولة {number}",
+  "@roundTitle": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "unknownTeam": "فريق غير معروف",
+  "finished": "انتهت",
+  "scheduled": "مجدولة"
 }

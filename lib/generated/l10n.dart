@@ -159,6 +159,11 @@ class S {
     );
   }
 
+  /// `Delete`
+  String get delete {
+    return Intl.message('Delete', name: 'delete', desc: '', args: []);
+  }
+
   /// `Cancel`
   String get cancel {
     return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
@@ -312,6 +317,96 @@ class S {
   /// `OK`
   String get ok {
     return Intl.message('OK', name: 'ok', desc: '', args: []);
+  }
+
+  /// `No matches yet`
+  String get noMatchesYet {
+    return Intl.message(
+      'No matches yet',
+      name: 'noMatchesYet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add at least two teams to generate the schedule.`
+  String get addTwoTeamsToGenerateSchedule {
+    return Intl.message(
+      'Add at least two teams to generate the schedule.',
+      name: 'addTwoTeamsToGenerateSchedule',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Generating...`
+  String get generating {
+    return Intl.message(
+      'Generating...',
+      name: 'generating',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Generate Schedule`
+  String get generateSchedule {
+    return Intl.message(
+      'Generate Schedule',
+      name: 'generateSchedule',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Retry`
+  String get retry {
+    return Intl.message('Retry', name: 'retry', desc: '', args: []);
+  }
+
+  /// `{count} matches`
+  String matchesCount(int count) {
+    return Intl.message(
+      '$count matches',
+      name: 'matchesCount',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Refresh`
+  String get refresh {
+    return Intl.message('Refresh', name: 'refresh', desc: '', args: []);
+  }
+
+  /// `Round {number}`
+  String roundTitle(int number) {
+    return Intl.message(
+      'Round $number',
+      name: 'roundTitle',
+      desc: '',
+      args: [number],
+    );
+  }
+
+  /// `Unknown team`
+  String get unknownTeam {
+    return Intl.message(
+      'Unknown team',
+      name: 'unknownTeam',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finished`
+  String get finished {
+    return Intl.message('Finished', name: 'finished', desc: '', args: []);
+  }
+
+  /// `Scheduled`
+  String get scheduled {
+    return Intl.message('Scheduled', name: 'scheduled', desc: '', args: []);
   }
 }
 

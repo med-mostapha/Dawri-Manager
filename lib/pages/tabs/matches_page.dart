@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tournament_organizer/database/database_helper.dart';
+import 'package:tournament_organizer/generated/l10n.dart';
 import 'package:tournament_organizer/models/match.dart';
 import 'package:tournament_organizer/models/team.dart';
 import 'package:tournament_organizer/models/tournament.dart';
@@ -173,12 +174,12 @@ class _MatchesTabState extends State<MatchesPage> {
         const Icon(Icons.calendar_month_outlined),
         const SizedBox(width: 8),
         Text(
-          '${_matches.length} matches',
+          S.of(context).matchesCount(_matches.length),
           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const Spacer(),
         IconButton(
-          tooltip: 'Refresh',
+          tooltip: S.of(context).refresh,
           onPressed: _loadData,
           icon: const Icon(Icons.refresh),
         ),
@@ -190,16 +191,15 @@ class _MatchesTabState extends State<MatchesPage> {
     return Padding(
       padding: const EdgeInsets.only(top: 12, bottom: 8),
       child: Text(
-        'Round $roundNumber',
+        S.of(context).roundTitle(roundNumber),
         style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
       ),
     );
   }
 
   Widget _buildMatchCard(Match match) {
-    final homeTeam = _teamNames[match.homeTeamId] ?? 'Unknown team';
-
-    final awayTeam = _teamNames[match.awayTeamId] ?? 'Unknown team';
+    final homeTeam = _teamNames[match.homeTeamId] ?? S.of(context).unknownTeam;
+    final awayTeam = _teamNames[match.awayTeamId] ?? S.of(context).unknownTeam;
 
     final isFinished = match.status == MatchStatus.finished;
 
@@ -243,7 +243,9 @@ class _MatchesTabState extends State<MatchesPage> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      isFinished ? 'Finished' : 'Scheduled',
+                      isFinished
+                          ? S.of(context).finished
+                          : S.of(context).scheduled,
                       style: TextStyle(
                         fontSize: 11,
                         color: isFinished ? Colors.green : Colors.grey,
@@ -281,13 +283,13 @@ class _MatchesTabState extends State<MatchesPage> {
               color: Colors.grey,
             ),
             const SizedBox(height: 12),
-            const Text(
-              'No matches yet',
+            Text(
+              S.of(context).noMatchesYet,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Add at least two teams to generate the schedule.',
+            Text(
+              S.of(context).addTwoTeamsToGenerateSchedule,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
@@ -301,7 +303,9 @@ class _MatchesTabState extends State<MatchesPage> {
                     )
                   : const Icon(Icons.auto_awesome),
               label: Text(
-                _isGenerating ? 'Generating...' : 'Generate Schedule',
+                _isGenerating
+                    ? S.of(context).generating
+                    : S.of(context).generateSchedule,
               ),
             ),
           ],
@@ -317,7 +321,10 @@ class _MatchesTabState extends State<MatchesPage> {
         children: [
           Text(_error!),
           const SizedBox(height: 12),
-          OutlinedButton(onPressed: _loadData, child: const Text('Retry')),
+          OutlinedButton(
+            onPressed: _loadData,
+            child: Text(S.of(context).retry),
+          ),
         ],
       ),
     );

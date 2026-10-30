@@ -22,11 +22,15 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(teamName) => "Delete ${teamName}?";
 
-  static String m1(age) => "Age: ${age}";
+  static String m1(count) => "${count} matches";
 
-  static String m2(count) => "Players (${count})";
+  static String m2(age) => "Age: ${age}";
 
-  static String m3(count) => "Teams (${count})";
+  static String m3(count) => "Players (${count})";
+
+  static String m4(number) => "Round ${number}";
+
+  static String m5(count) => "Teams (${count})";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -35,6 +39,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Can\'t add player. Please try again.",
     ),
     "addTeam": MessageLookupByLibrary.simpleMessage("Add Team"),
+    "addTwoTeamsToGenerateSchedule": MessageLookupByLibrary.simpleMessage(
+      "Add at least two teams to generate the schedule.",
+    ),
     "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
     "cannotModifyTeamsAfterSchedule": MessageLookupByLibrary.simpleMessage(
       "You cannot add, edit, or delete teams after generating the schedule.",
@@ -46,6 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Are you sure you want to delete this team?",
     ),
     "create": MessageLookupByLibrary.simpleMessage("Create"),
+    "delete": MessageLookupByLibrary.simpleMessage("Delete"),
     "deletePlayer": MessageLookupByLibrary.simpleMessage("Delete player"),
     "deleteTeamTitle": m0,
     "duplicateTeamName": MessageLookupByLibrary.simpleMessage(
@@ -53,14 +61,21 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "editPlayer": MessageLookupByLibrary.simpleMessage("Edit Player"),
     "editTeam": MessageLookupByLibrary.simpleMessage("Edit Team"),
+    "finished": MessageLookupByLibrary.simpleMessage("Finished"),
+    "generateSchedule": MessageLookupByLibrary.simpleMessage(
+      "Generate Schedule",
+    ),
+    "generating": MessageLookupByLibrary.simpleMessage("Generating..."),
     "invalidPlayerAge": MessageLookupByLibrary.simpleMessage(
       "Age must be between 1 and 99.",
     ),
+    "matchesCount": m1,
+    "noMatchesYet": MessageLookupByLibrary.simpleMessage("No matches yet"),
     "noPlayersYet": MessageLookupByLibrary.simpleMessage("No players yet"),
     "noTeamYet": MessageLookupByLibrary.simpleMessage("No Teams Yet"),
     "ok": MessageLookupByLibrary.simpleMessage("OK"),
     "pageHomeTitle": MessageLookupByLibrary.simpleMessage("Dawri Manager"),
-    "playerAge": m1,
+    "playerAge": m2,
     "playerAgeOptional": MessageLookupByLibrary.simpleMessage("Age (optional)"),
     "playerAgeText": MessageLookupByLibrary.simpleMessage("Age"),
     "playerName": MessageLookupByLibrary.simpleMessage("Player name"),
@@ -68,20 +83,25 @@ class MessageLookup extends MessageLookupByLibrary {
       "Player name is required.",
     ),
     "players": MessageLookupByLibrary.simpleMessage("Players"),
-    "playersCount": m2,
+    "playersCount": m3,
+    "refresh": MessageLookupByLibrary.simpleMessage("Refresh"),
+    "retry": MessageLookupByLibrary.simpleMessage("Retry"),
+    "roundTitle": m4,
     "saveChanges": MessageLookupByLibrary.simpleMessage("Save Changes"),
     "scheduleAlreadyGenerated": MessageLookupByLibrary.simpleMessage(
       "Schedule already generated",
     ),
+    "scheduled": MessageLookupByLibrary.simpleMessage("Scheduled"),
     "teamName": MessageLookupByLibrary.simpleMessage("Team name"),
     "teamNameRequired": MessageLookupByLibrary.simpleMessage(
       "Please enter a team name.",
     ),
-    "teamsCount": m3,
+    "teamsCount": m5,
     "unexpectedError": MessageLookupByLibrary.simpleMessage(
       "An unexpected error occurred.",
     ),
     "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),
+    "unknownTeam": MessageLookupByLibrary.simpleMessage("Unknown team"),
     "updatePlayerFailed": MessageLookupByLibrary.simpleMessage(
       "Can\'t update player. Please try again.",
     ),

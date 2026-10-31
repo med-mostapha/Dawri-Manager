@@ -16,8 +16,21 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final ValueNotifier<Locale> _locale = ValueNotifier(const Locale('ar'));
+
+  @override
+  void dispose() {
+    _locale.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,26 +53,36 @@ class MyApp extends StatelessWidget {
           create: (_) => TopScorersViewModel(databaseServices),
         ),
       ],
-      child: MaterialApp(
-        localizationsDelegates: [
-          S.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: S.delegate.supportedLocales,
-        locale: Locale('ar'),
-        debugShowCheckedModeBanner: false,
-        title: 'Dawri Manager',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: Builder(
-          builder: (context) {
-            return HomePage(title: S.of(context).pageHomeTitle);
-          },
-        ),
+      child: ValueListenableBuilder<Locale>(
+        valueListenable: _locale,
+        builder: (context, locale, child) {
+          return MaterialApp(
+            localizationsDelegates: [
+              S.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: S.delegate.supportedLocales,
+            debugShowCheckedModeBanner: false,
+            title: 'Dawri Manager',
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+              useMaterial3: true,
+            ),
+            home: Builder(
+              builder: (context) {
+                return HomePage(
+                  title: S.of(context).pageHomeTitle,
+                  onLanguageChanged: (locale) {
+                    _locale.value = locale;
+                  },
+                );
+              },
+            ),
+            locale: locale,
+          );
+        },
       ),
     );
   }

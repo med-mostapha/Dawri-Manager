@@ -10,7 +10,13 @@ import 'package:tournament_organizer/widgets/alert_dialog.dart';
 import 'package:tournament_organizer/widgets/build_placeholder.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
+  final ValueChanged<Locale> onLanguageChanged;
+
+  const HomePage({
+    super.key,
+    required this.title,
+    required this.onLanguageChanged,
+  });
 
   final String title;
 
@@ -46,14 +52,23 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(widget.title),
         actions: [
+          PopupMenuButton<String>(
+            tooltip: 'Change language',
+            icon: const Icon(Icons.language),
+            onSelected: (language) {
+              widget.onLanguageChanged(Locale(language));
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem(value: 'ar', child: Text('العربية')),
+              const PopupMenuItem(value: 'en', child: Text('English')),
+            ],
+          ),
           IconButton(
             onPressed: () => viewModel.loadTournaments(),
             tooltip: S.of(context).refreshTournaments,
             icon: const Icon(Icons.refresh),
           ),
         ],
-        // backgroundColor: Theme.of(context).primaryColor,
-        // titleTextStyle: TextStyle(color: Colors.white),
       ),
       floatingActionButton: _addTournamentButton(),
       body: Padding(

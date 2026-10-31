@@ -5,6 +5,7 @@ import 'package:tournament_organizer/pages/tabs/matches_page.dart';
 import 'package:tournament_organizer/pages/tabs/team_page.dart';
 import 'package:tournament_organizer/pages/tabs/top_scorers_page.dart';
 import 'package:tournament_organizer/pages/tabs/standings_page.dart';
+import 'package:tournament_organizer/generated/l10n.dart';
 
 class TournamentDetailsPage extends StatelessWidget {
   final Tournament tournament;
@@ -19,15 +20,21 @@ class TournamentDetailsPage extends StatelessWidget {
         appBar: AppBar(
           centerTitle: true,
           title: Text(tournament.name),
-          bottom: const TabBar(
+          bottom: TabBar(
             isScrollable: false,
             tabs: [
-              Tab(icon: Icon(Icons.groups_outlined), text: 'Teams'),
-              Tab(icon: Icon(Icons.calendar_month_outlined), text: 'Matches'),
-              Tab(icon: Icon(Icons.emoji_events_outlined), text: 'Standings'),
+              Tab(icon: Icon(Icons.groups_outlined), text: S.of(context).teams),
+              Tab(
+                icon: Icon(Icons.calendar_month_outlined),
+                text: S.of(context).matches,
+              ),
+              Tab(
+                icon: Icon(Icons.emoji_events_outlined),
+                text: S.of(context).standings,
+              ),
               Tab(
                 icon: Icon(Icons.sports_soccer_outlined),
-                text: 'Top Scorers',
+                text: S.of(context).topScorers,
               ),
             ],
           ),

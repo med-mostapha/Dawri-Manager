@@ -853,6 +853,21 @@ class S {
       args: [],
     );
   }
+
+  /// `Matches`
+  String get matches {
+    return Intl.message('Matches', name: 'matches', desc: '', args: []);
+  }
+
+  /// `Standings`
+  String get standings {
+    return Intl.message('Standings', name: 'standings', desc: '', args: []);
+  }
+
+  /// `Top Scorers`
+  String get topScorers {
+    return Intl.message('Top Scorers', name: 'topScorers', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

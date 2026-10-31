@@ -126,6 +126,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "matchStatusNotChanged": MessageLookupByLibrary.simpleMessage(
       "لم تتغير حالة المباراة. يرجى التحديث.",
     ),
+    "matches": MessageLookupByLibrary.simpleMessage("المباريات"),
     "matchesCount": m4,
     "matchesPlayed": MessageLookupByLibrary.simpleMessage("المباريات الملعوبة"),
     "minute": MessageLookupByLibrary.simpleMessage("الدقيقة"),
@@ -192,6 +193,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "selectTeamFirst": MessageLookupByLibrary.simpleMessage(
       "اختر فريقًا أولًا",
     ),
+    "standings": MessageLookupByLibrary.simpleMessage("الترتيب"),
     "standingsLegend": MessageLookupByLibrary.simpleMessage(
       "ل: لعب  ف: فاز  ت: تعادل  خ: خسر\nله: أهداف له  عليه: أهداف عليه  ف.أ: فارق الأهداف  ن: النقاط",
     ),
@@ -202,6 +204,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "teams": MessageLookupByLibrary.simpleMessage("الفرق"),
     "teamsCount": m8,
+    "topScorers": MessageLookupByLibrary.simpleMessage("الهدافون"),
     "unexpectedError": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ غير متوقع.",
     ),

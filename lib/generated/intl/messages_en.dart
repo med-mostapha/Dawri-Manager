@@ -126,6 +126,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "matchStatusNotChanged": MessageLookupByLibrary.simpleMessage(
       "Match status was not changed. Please refresh.",
     ),
+    "matches": MessageLookupByLibrary.simpleMessage("Matches"),
     "matchesCount": m4,
     "matchesPlayed": MessageLookupByLibrary.simpleMessage("Matches played"),
     "minute": MessageLookupByLibrary.simpleMessage("Minute"),
@@ -180,6 +181,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "selectTeamFirst": MessageLookupByLibrary.simpleMessage(
       "Select a team first",
     ),
+    "standings": MessageLookupByLibrary.simpleMessage("Standings"),
     "standingsLegend": MessageLookupByLibrary.simpleMessage(
       "P: Played  W: Won  D: Drawn  L: Lost\nGF: Goals For  GA: Goals Against  GD: Goal Difference  PTS: Points",
     ),
@@ -190,6 +192,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "teams": MessageLookupByLibrary.simpleMessage("Teams"),
     "teamsCount": m8,
+    "topScorers": MessageLookupByLibrary.simpleMessage("Top Scorers"),
     "unexpectedError": MessageLookupByLibrary.simpleMessage(
       "An unexpected error occurred.",
     ),

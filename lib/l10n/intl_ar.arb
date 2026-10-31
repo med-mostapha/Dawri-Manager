@@ -154,5 +154,8 @@
   "goalDifference": "الفارق",
   "points": "النقاط",
   "close": "إغلاق",
-  "noGoalsScoredYet": "لم يتم تسجيل أي أهداف حتى الآن."
+  "noGoalsScoredYet": "لم يتم تسجيل أي أهداف حتى الآن.",
+  "matches": "المباريات",
+  "standings": "الترتيب",
+  "topScorers": "الهدافون"
 }

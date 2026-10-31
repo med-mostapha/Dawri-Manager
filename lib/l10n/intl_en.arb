@@ -154,5 +154,8 @@
   "goalDifference": "Difference",
   "points": "Points",
   "close": "Close",
-  "noGoalsScoredYet": "No goals scored yet."
+  "noGoalsScoredYet": "No goals scored yet.",
+  "matches": "Matches",
+  "standings": "Standings",
+  "topScorers": "Top Scorers"
 }

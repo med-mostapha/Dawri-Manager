@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:tournament_organizer/models/tournament.dart';
 import 'package:tournament_organizer/utils/date_utils.dart';
@@ -124,6 +125,7 @@ class _AddTournamentDialogState extends State<AddTournamentDialog> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextField(
+            inputFormatters: [LengthLimitingTextInputFormatter(30)],
             controller: _nameController,
             autofocus: true,
             textCapitalization: TextCapitalization.sentences,

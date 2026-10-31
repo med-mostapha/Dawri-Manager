@@ -843,6 +843,16 @@ class S {
   String get close {
     return Intl.message('Close', name: 'close', desc: '', args: []);
   }
+
+  /// `No goals scored yet.`
+  String get noGoalsScoredYet {
+    return Intl.message(
+      'No goals scored yet.',
+      name: 'noGoalsScoredYet',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

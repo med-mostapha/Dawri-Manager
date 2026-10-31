@@ -132,6 +132,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "noGoalsRecordedYet": MessageLookupByLibrary.simpleMessage(
       "No goals recorded yet.",
     ),
+    "noGoalsScoredYet": MessageLookupByLibrary.simpleMessage(
+      "No goals scored yet.",
+    ),
     "noMatchesYet": MessageLookupByLibrary.simpleMessage("No matches yet"),
     "noPlayersYet": MessageLookupByLibrary.simpleMessage("No players yet"),
     "noStandingsYet": MessageLookupByLibrary.simpleMessage("No standings yet"),

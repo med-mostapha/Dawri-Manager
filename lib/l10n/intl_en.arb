@@ -153,5 +153,6 @@
   "goalsAgainst": "Against",
   "goalDifference": "Difference",
   "points": "Points",
-  "close": "Close"
+  "close": "Close",
+  "noGoalsScoredYet": "No goals scored yet."
 }

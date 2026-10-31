@@ -56,6 +56,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "cannotModifyTeamsAfterSchedule": MessageLookupByLibrary.simpleMessage(
       "لا يمكنك إضافة الفرق أو تعديلها أو حذفها بعد إنشاء جدول المباريات.",
     ),
+    "close": MessageLookupByLibrary.simpleMessage("إغلاق"),
     "confirmDeleteGoal": MessageLookupByLibrary.simpleMessage(
       "هل أنت متأكد أنك تريد حذف هذا الهدف؟",
     ),
@@ -129,6 +130,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "matchesPlayed": MessageLookupByLibrary.simpleMessage("المباريات الملعوبة"),
     "minute": MessageLookupByLibrary.simpleMessage("الدقيقة"),
     "noGoalsRecordedYet": MessageLookupByLibrary.simpleMessage(
+      "لم يتم تسجيل أي أهداف حتى الآن.",
+    ),
+    "noGoalsScoredYet": MessageLookupByLibrary.simpleMessage(
       "لم يتم تسجيل أي أهداف حتى الآن.",
     ),
     "noMatchesYet": MessageLookupByLibrary.simpleMessage(

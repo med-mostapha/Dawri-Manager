@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tournament_organizer/generated/l10n.dart';
 
 import '../../models/tournament.dart';
 import '../../viewmodels/top_scorers_view_model.dart';
@@ -48,7 +49,7 @@ class _TopScorersPageState extends State<TopScorersPage> {
                     onPressed: () {
                       viewModel.loadTopScorers(widget.tournament.id!);
                     },
-                    child: const Text('Retry'),
+                    child: Text(S.of(context).retry),
                   ),
                 ],
               ),
@@ -61,18 +62,18 @@ class _TopScorersPageState extends State<TopScorersPage> {
             onRefresh: () => viewModel.loadTopScorers(widget.tournament.id!),
             child: ListView(
               physics: const AlwaysScrollableScrollPhysics(),
-              children: const [
-                SizedBox(height: 140),
-                Icon(
+              children: [
+                const SizedBox(height: 140),
+                const Icon(
                   Icons.sports_soccer_outlined,
                   size: 56,
                   color: Colors.grey,
                 ),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 Center(
                   child: Text(
-                    'No goals scored yet.',
-                    style: TextStyle(fontSize: 16, color: Colors.grey),
+                    S.of(context).noGoalsScoredYet,
+                    style: const TextStyle(fontSize: 16, color: Colors.grey),
                   ),
                 ),
               ],
@@ -96,12 +97,12 @@ class _TopScorersPageState extends State<TopScorersPage> {
                   horizontalInside: BorderSide(color: Colors.grey.shade300),
                 ),
                 children: [
-                  const TableRow(
-                    decoration: BoxDecoration(color: Color(0xFFF2F2F2)),
+                  TableRow(
+                    decoration: const BoxDecoration(color: Color(0xFFF2F2F2)),
                     children: [
-                      _HeaderCell('Player'),
-                      _HeaderCell('Team'),
-                      _HeaderCell('Goals'),
+                      _HeaderCell(S.of(context).player),
+                      _HeaderCell(S.of(context).team),
+                      _HeaderCell(S.of(context).goals),
                     ],
                   ),
                   ...List.generate(viewModel.topScorers.length, (index) {

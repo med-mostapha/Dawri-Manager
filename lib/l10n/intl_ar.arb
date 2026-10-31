@@ -152,5 +152,7 @@
   "goalsFor": "له",
   "goalsAgainst": "عليه",
   "goalDifference": "الفارق",
-  "points": "النقاط"
+  "points": "النقاط",
+  "close": "إغلاق",
+  "noGoalsScoredYet": "لم يتم تسجيل أي أهداف حتى الآن."
 }

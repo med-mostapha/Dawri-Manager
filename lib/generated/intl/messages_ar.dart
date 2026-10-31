@@ -24,22 +24,25 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(teamName) => "حذف ${teamName}؟";
 
-  static String m2(count) => "عدد الأهداف: ${count}";
+  static String m2(name) => "حذف ${name}؟";
 
-  static String m3(amount) => "زيادة بمقدار ${amount}";
+  static String m3(count) => "عدد الأهداف: ${count}";
 
-  static String m4(count) => "عدد المباريات: ${count}";
+  static String m4(amount) => "زيادة بمقدار ${amount}";
 
-  static String m5(age) => "العمر: ${age}";
+  static String m5(count) => "عدد المباريات: ${count}";
 
-  static String m6(count) => "عدد اللاعبين: ${count}";
+  static String m6(age) => "العمر: ${age}";
 
-  static String m7(number) => "الجولة ${number}";
+  static String m7(count) => "عدد اللاعبين: ${count}";
 
-  static String m8(count) => "عدد الفرق: ${count}";
+  static String m8(number) => "الجولة ${number}";
+
+  static String m9(count) => "عدد الفرق: ${count}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "addChampionship": MessageLookupByLibrary.simpleMessage("إضافة بطولة"),
     "addGoal": MessageLookupByLibrary.simpleMessage("إضافة هدف"),
     "addPlayer": MessageLookupByLibrary.simpleMessage("إضافة لاعب"),
     "addPlayerFailed": MessageLookupByLibrary.simpleMessage(
@@ -56,9 +59,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "cannotModifyTeamsAfterSchedule": MessageLookupByLibrary.simpleMessage(
       "لا يمكنك إضافة الفرق أو تعديلها أو حذفها بعد إنشاء جدول المباريات.",
     ),
+    "cannotSaveTournament": MessageLookupByLibrary.simpleMessage(
+      "تعذّر حفظ البطولة",
+    ),
+    "championshipName": MessageLookupByLibrary.simpleMessage("اسم البطولة"),
     "close": MessageLookupByLibrary.simpleMessage("إغلاق"),
     "confirmDeleteGoal": MessageLookupByLibrary.simpleMessage(
       "هل أنت متأكد أنك تريد حذف هذا الهدف؟",
+    ),
+    "confirmDeleteMessage": MessageLookupByLibrary.simpleMessage(
+      "هل أنت متأكد من أنك تريد الحذف؟",
     ),
     "confirmDeletePlayer": MessageLookupByLibrary.simpleMessage(
       "هل أنت متأكد أنك تريد حذف هذا لاعب ؟",
@@ -72,17 +82,23 @@ class MessageLookup extends MessageLookupByLibrary {
     "create": MessageLookupByLibrary.simpleMessage("إنشاء"),
     "decreaseBy": m0,
     "delete": MessageLookupByLibrary.simpleMessage("حذف"),
+    "deleteChampionship": MessageLookupByLibrary.simpleMessage("حذف البطولة"),
     "deleteGoalFailed": MessageLookupByLibrary.simpleMessage("فشل حذف الهدف."),
     "deleteGoalTitle": MessageLookupByLibrary.simpleMessage("حذف الهدف؟"),
     "deletePlayer": MessageLookupByLibrary.simpleMessage("حذف اللاعب"),
     "deleteTeamTitle": m1,
+    "deleteTournamentTitle": m2,
     "drawn": MessageLookupByLibrary.simpleMessage("تعادل"),
     "duplicateTeamName": MessageLookupByLibrary.simpleMessage(
       "يوجد فريق بهذا الاسم في هذه البطولة بالفعل.",
     ),
+    "editChampionship": MessageLookupByLibrary.simpleMessage("تعديل البطولة"),
     "editGoal": MessageLookupByLibrary.simpleMessage("تعديل الهدف"),
     "editPlayer": MessageLookupByLibrary.simpleMessage("تعديل لاعب"),
     "editTeam": MessageLookupByLibrary.simpleMessage("تعديل فريق"),
+    "enterChampionshipName": MessageLookupByLibrary.simpleMessage(
+      "يرجى إدخال اسم البطولة.",
+    ),
     "failedToLoadPlayers": MessageLookupByLibrary.simpleMessage(
       "فشل تحميل اللاعبين.",
     ),
@@ -103,9 +119,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "goalDifference": MessageLookupByLibrary.simpleMessage("الفارق"),
     "goals": MessageLookupByLibrary.simpleMessage("الأهداف"),
     "goalsAgainst": MessageLookupByLibrary.simpleMessage("عليه"),
-    "goalsCount": m2,
+    "goalsCount": m3,
     "goalsFor": MessageLookupByLibrary.simpleMessage("له"),
-    "increaseBy": m3,
+    "homeAndAway": MessageLookupByLibrary.simpleMessage("ذهاب وإياب"),
+    "homeAndAwayEnglish": MessageLookupByLibrary.simpleMessage("ذهاب وإياب"),
+    "increaseBy": m4,
     "invalidMatchId": MessageLookupByLibrary.simpleMessage(
       "معرّف المباراة غير صالح.",
     ),
@@ -117,6 +135,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "lost": MessageLookupByLibrary.simpleMessage("خسر"),
     "matchDetails": MessageLookupByLibrary.simpleMessage("تفاصيل المباراة"),
     "matchFinished": MessageLookupByLibrary.simpleMessage("تم إنهاء المباراة."),
+    "matchFormat": MessageLookupByLibrary.simpleMessage("نظام المباريات"),
     "matchIdMissing": MessageLookupByLibrary.simpleMessage(
       "معرّف المباراة غير موجود.",
     ),
@@ -127,7 +146,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "لم تتغير حالة المباراة. يرجى التحديث.",
     ),
     "matches": MessageLookupByLibrary.simpleMessage("المباريات"),
-    "matchesCount": m4,
+    "matchesCount": m5,
     "matchesPlayed": MessageLookupByLibrary.simpleMessage("المباريات الملعوبة"),
     "minute": MessageLookupByLibrary.simpleMessage("الدقيقة"),
     "noGoalsRecordedYet": MessageLookupByLibrary.simpleMessage(
@@ -148,11 +167,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "noTeamYet": MessageLookupByLibrary.simpleMessage(
       "لا يوجد لاعبون حتى الآن",
     ),
+    "noTournamentYet": MessageLookupByLibrary.simpleMessage(
+      "لا توجد بطولات حتى الآن!",
+    ),
     "ok": MessageLookupByLibrary.simpleMessage("حسنًا"),
+    "oneLeg": MessageLookupByLibrary.simpleMessage(
+      "مباراة واحدة بين كل فريقين",
+    ),
     "pageHomeTitle": MessageLookupByLibrary.simpleMessage("مدير الدوري"),
     "played": MessageLookupByLibrary.simpleMessage("لعب"),
     "player": MessageLookupByLibrary.simpleMessage("اللاعب"),
-    "playerAge": m5,
+    "playerAge": m6,
     "playerAgeOptional": MessageLookupByLibrary.simpleMessage(
       "العمر (اختياري)",
     ),
@@ -162,15 +187,24 @@ class MessageLookup extends MessageLookupByLibrary {
       "اسم اللاعب مطلوب.",
     ),
     "players": MessageLookupByLibrary.simpleMessage("اللاعبون"),
-    "playersCount": m6,
+    "playersCount": m7,
     "pleaseSelectPlayer": MessageLookupByLibrary.simpleMessage(
       "يرجى اختيار لاعب.",
     ),
     "pleaseSelectTeam": MessageLookupByLibrary.simpleMessage(
       "يرجى اختيار فريق.",
     ),
+    "pleaseTryAgain": MessageLookupByLibrary.simpleMessage(
+      "يرجى المحاولة مرة أخرى.",
+    ),
     "points": MessageLookupByLibrary.simpleMessage("النقاط"),
     "refresh": MessageLookupByLibrary.simpleMessage("تحديث"),
+    "refreshTournaments": MessageLookupByLibrary.simpleMessage(
+      "تحديث البطولات",
+    ),
+    "reloadTournaments": MessageLookupByLibrary.simpleMessage(
+      "إعادة تحميل البطولات",
+    ),
     "reopen": MessageLookupByLibrary.simpleMessage("إعادة فتح"),
     "reopenMatchBeforeAddingGoals": MessageLookupByLibrary.simpleMessage(
       "أعد فتح المباراة قبل إضافة الأهداف.",
@@ -182,7 +216,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "إعادة فتح المباراة؟",
     ),
     "retry": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
-    "roundTitle": m7,
+    "roundTitle": m8,
     "saveChanges": MessageLookupByLibrary.simpleMessage("حفظ التغييرات"),
     "saveGoal": MessageLookupByLibrary.simpleMessage("حفظ الهدف"),
     "scheduleAlreadyGenerated": MessageLookupByLibrary.simpleMessage(
@@ -193,6 +227,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "selectTeamFirst": MessageLookupByLibrary.simpleMessage(
       "اختر فريقًا أولًا",
     ),
+    "singleRound": MessageLookupByLibrary.simpleMessage("ذهاب فقط"),
     "standings": MessageLookupByLibrary.simpleMessage("الترتيب"),
     "standingsLegend": MessageLookupByLibrary.simpleMessage(
       "ل: لعب  ف: فاز  ت: تعادل  خ: خسر\nله: أهداف له  عليه: أهداف عليه  ف.أ: فارق الأهداف  ن: النقاط",
@@ -203,7 +238,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "يرجى إدخال اسم الفريق.",
     ),
     "teams": MessageLookupByLibrary.simpleMessage("الفرق"),
-    "teamsCount": m8,
+    "teamsCount": m9,
     "topScorers": MessageLookupByLibrary.simpleMessage("الهدافون"),
     "unexpectedError": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ غير متوقع.",

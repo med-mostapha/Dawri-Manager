@@ -157,5 +157,22 @@
   "noGoalsScoredYet": "لم يتم تسجيل أي أهداف حتى الآن.",
   "matches": "المباريات",
   "standings": "الترتيب",
-  "topScorers": "الهدافون"
+  "topScorers": "الهدافون",
+  "confirmDeleteMessage": "هل أنت متأكد من أنك تريد الحذف؟",
+  "refreshTournaments": "تحديث البطولات",
+  "reloadTournaments": "إعادة تحميل البطولات",
+  "noTournamentYet": "لا توجد بطولات حتى الآن!",
+  "singleRound": "ذهاب فقط",
+  "homeAndAway": "ذهاب وإياب",
+  "deleteChampionship": "حذف البطولة",
+  "deleteTournamentTitle": "حذف {name}؟",
+  "addChampionship": "إضافة بطولة",
+  "editChampionship": "تعديل البطولة",
+  "championshipName": "اسم البطولة",
+  "matchFormat": "نظام المباريات",
+  "cannotSaveTournament": "تعذّر حفظ البطولة",
+  "pleaseTryAgain": "يرجى المحاولة مرة أخرى.",
+  "enterChampionshipName": "يرجى إدخال اسم البطولة.",
+  "oneLeg": "مباراة واحدة بين كل فريقين",
+  "homeAndAwayEnglish": "ذهاب وإياب"
 }

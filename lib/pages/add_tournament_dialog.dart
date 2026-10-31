@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:tournament_organizer/models/tournament.dart';
 import 'package:tournament_organizer/utils/date_utils.dart';
 import 'package:tournament_organizer/viewmodels/tournament_view_model.dart';
+import 'package:tournament_organizer/generated/l10n.dart';
 
 class AddTournamentDialog extends StatefulWidget {
   final Tournament? tournament;
@@ -41,7 +42,7 @@ class _AddTournamentDialogState extends State<AddTournamentDialog> {
 
     if (name.isEmpty) {
       setState(() {
-        _nameError = 'Please enter a championship name.';
+        _nameError = S.of(context).enterChampionshipName;
       });
       return;
     }
@@ -87,12 +88,12 @@ class _AddTournamentDialogState extends State<AddTournamentDialog> {
         await showDialog<void>(
           context: context,
           builder: (dialogContext) => AlertDialog(
-            title: const Text('Cannot save tournament'),
-            content: Text(error ?? 'Please try again.'),
+            title: Text(S.of(context).cannotSaveTournament),
+            content: Text(error ?? S.of(context).pleaseTryAgain),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(dialogContext).pop(),
-                child: const Text('OK'),
+                child: Text(S.of(context).ok),
               ),
             ],
           ),
@@ -105,9 +106,8 @@ class _AddTournamentDialogState extends State<AddTournamentDialog> {
         _isSaving = false;
       });
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("An unexpected error occurred.")),
-      );
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(S.of(context).unexpectedError)));
     }
   }
 
@@ -115,7 +115,9 @@ class _AddTournamentDialogState extends State<AddTournamentDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
-        widget.tournament == null ? 'Add Championship' : 'Edit Championship',
+        widget.tournament == null
+            ? S.of(context).addChampionship
+            : S.of(context).editChampionship,
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -127,7 +129,7 @@ class _AddTournamentDialogState extends State<AddTournamentDialog> {
             textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
-              hintText: 'Championship name',
+              hintText: S.of(context).championshipName,
               errorText: _nameError,
             ),
             onChanged: (value) {
@@ -140,9 +142,9 @@ class _AddTournamentDialogState extends State<AddTournamentDialog> {
             onSubmitted: (_) => _saveTournament(),
           ),
           const SizedBox(height: 16),
-          const Text(
-            'Match format',
-            style: TextStyle(fontWeight: FontWeight.w600),
+          Text(
+            S.of(context).matchFormat,
+            style: const TextStyle(fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 8),
           RadioGroup<MatchType>(
@@ -154,17 +156,17 @@ class _AddTournamentDialogState extends State<AddTournamentDialog> {
                 });
               }
             },
-            child: const Column(
+            child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 RadioListTile<MatchType>(
                   value: MatchType.singleRound,
-                  title: Text('Aller simple (One leg)'),
+                  title: Text(S.of(context).singleRound),
                   contentPadding: EdgeInsets.zero,
                 ),
                 RadioListTile<MatchType>(
                   value: MatchType.homeAndAway,
-                  title: Text('Aller-retour (Home and away)'),
+                  title: Text(S.of(context).homeAndAway),
                   contentPadding: EdgeInsets.zero,
                 ),
               ],
@@ -175,7 +177,7 @@ class _AddTournamentDialogState extends State<AddTournamentDialog> {
       actions: [
         TextButton(
           onPressed: _isSaving ? null : () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: Text(S.of(context).cancel),
         ),
         FilledButton(
           onPressed: _isSaving ? null : _saveTournament,
@@ -185,7 +187,11 @@ class _AddTournamentDialogState extends State<AddTournamentDialog> {
                   height: 18,
                   child: CircularProgressIndicator(strokeWidth: 2),
                 )
-              : Text(widget.tournament == null ? 'Create' : 'Save Changes'),
+              : Text(
+                  widget.tournament == null
+                      ? S.of(context).create
+                      : S.of(context).saveChanges,
+                ),
         ),
       ],
     );

@@ -157,5 +157,22 @@
   "noGoalsScoredYet": "No goals scored yet.",
   "matches": "Matches",
   "standings": "Standings",
-  "topScorers": "Top Scorers"
+  "topScorers": "Top Scorers",
+  "confirmDeleteMessage": "Are you sure you want to delete?",
+  "refreshTournaments": "Refresh tournaments",
+  "reloadTournaments": "Reload tournaments",
+  "noTournamentYet": "No tournament yet!",
+  "singleRound": "Single round",
+  "homeAndAway": "Home and away",
+  "deleteChampionship": "Delete championship",
+  "deleteTournamentTitle": "Delete {name}?",
+  "addChampionship": "Add Championship",
+  "editChampionship": "Edit Championship",
+  "championshipName": "Championship name",
+  "matchFormat": "Match format",
+  "cannotSaveTournament": "Cannot save tournament",
+  "pleaseTryAgain": "Please try again.",
+  "enterChampionshipName": "Please enter a championship name.",
+  "oneLeg": "One leg",
+  "homeAndAwayEnglish": "Home and away"
 }

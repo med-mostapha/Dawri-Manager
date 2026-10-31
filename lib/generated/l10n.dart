@@ -868,6 +868,171 @@ class S {
   String get topScorers {
     return Intl.message('Top Scorers', name: 'topScorers', desc: '', args: []);
   }
+
+  /// `Are you sure you want to delete?`
+  String get confirmDeleteMessage {
+    return Intl.message(
+      'Are you sure you want to delete?',
+      name: 'confirmDeleteMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Refresh tournaments`
+  String get refreshTournaments {
+    return Intl.message(
+      'Refresh tournaments',
+      name: 'refreshTournaments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reload tournaments`
+  String get reloadTournaments {
+    return Intl.message(
+      'Reload tournaments',
+      name: 'reloadTournaments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No tournament yet!`
+  String get noTournamentYet {
+    return Intl.message(
+      'No tournament yet!',
+      name: 'noTournamentYet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Single round`
+  String get singleRound {
+    return Intl.message(
+      'Single round',
+      name: 'singleRound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Home and away`
+  String get homeAndAway {
+    return Intl.message(
+      'Home and away',
+      name: 'homeAndAway',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete championship`
+  String get deleteChampionship {
+    return Intl.message(
+      'Delete championship',
+      name: 'deleteChampionship',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete {name}?`
+  String deleteTournamentTitle(Object name) {
+    return Intl.message(
+      'Delete $name?',
+      name: 'deleteTournamentTitle',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Add Championship`
+  String get addChampionship {
+    return Intl.message(
+      'Add Championship',
+      name: 'addChampionship',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Championship`
+  String get editChampionship {
+    return Intl.message(
+      'Edit Championship',
+      name: 'editChampionship',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Championship name`
+  String get championshipName {
+    return Intl.message(
+      'Championship name',
+      name: 'championshipName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Match format`
+  String get matchFormat {
+    return Intl.message(
+      'Match format',
+      name: 'matchFormat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cannot save tournament`
+  String get cannotSaveTournament {
+    return Intl.message(
+      'Cannot save tournament',
+      name: 'cannotSaveTournament',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please try again.`
+  String get pleaseTryAgain {
+    return Intl.message(
+      'Please try again.',
+      name: 'pleaseTryAgain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter a championship name.`
+  String get enterChampionshipName {
+    return Intl.message(
+      'Please enter a championship name.',
+      name: 'enterChampionshipName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `One leg`
+  String get oneLeg {
+    return Intl.message('One leg', name: 'oneLeg', desc: '', args: []);
+  }
+
+  /// `Home and away`
+  String get homeAndAwayEnglish {
+    return Intl.message(
+      'Home and away',
+      name: 'homeAndAwayEnglish',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

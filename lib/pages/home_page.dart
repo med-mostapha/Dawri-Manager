@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tournament_organizer/generated/l10n.dart';
 import 'package:tournament_organizer/models/tournament.dart';
 import 'package:tournament_organizer/pages/add_tournament_dialog.dart';
 import 'package:tournament_organizer/pages/tournament_details_page.dart';
@@ -30,8 +31,8 @@ class _HomePageState extends State<HomePage> {
   void _deleteTournament(Tournament t) {
     showDeleteDialog(
       context: context,
-      title: 'Delete ${t.name} ?',
-      message: 'Are you sure you want to delete?',
+      title: S.of(context).deleteTournamentTitle(t.name),
+      message: S.of(context).confirmDeleteMessage,
       onConfirm: () =>
           context.read<TournamentViewModel>().deleteTournament(t.id!),
     );
@@ -47,7 +48,7 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             onPressed: () => viewModel.loadTournaments(),
-            tooltip: 'Refresh matches',
+            tooltip: S.of(context).refreshTournaments,
             icon: const Icon(Icons.refresh),
           ),
         ],
@@ -85,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                     OutlinedButton.icon(
                       onPressed: () => viewModel.loadTournaments(),
                       icon: const Icon(Icons.refresh),
-                      label: const Text('Reload tournaments'),
+                      label: Text(S.of(context).reloadTournaments),
                     ),
                   ],
                 ),
@@ -93,9 +94,9 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           (_, _, final tournament) when tournament.isEmpty => Center(
-            child: const BuildPlaceholder(
+            child: BuildPlaceholder(
               icon: Icons.emoji_events,
-              message: 'No tournament yet!',
+              message: S.of(context).noTournamentYet,
             ),
           ),
           (_, _, final tournament) => ListView.builder(
@@ -190,8 +191,8 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(width: 6),
                   Text(
                     tournament.matchType == MatchType.singleRound
-                        ? 'Aller simple'
-                        : 'Aller-retour',
+                        ? S.of(context).singleRound
+                        : S.of(context).homeAndAway,
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
@@ -204,7 +205,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         trailing: IconButton(
-          tooltip: 'Delete championship',
+          tooltip: S.of(context).deleteChampionship,
           onPressed: () => _deleteTournament(tournament),
           icon: const Icon(
             Icons.delete_outline_rounded,

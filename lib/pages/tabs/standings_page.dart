@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:tournament_organizer/models/tournament.dart';
 import 'package:tournament_organizer/models/team_standing.dart';
 import 'package:tournament_organizer/viewmodels/standings_view_model.dart';
+import 'package:tournament_organizer/generated/l10n.dart';
 
 class StandingsPage extends StatefulWidget {
   final Tournament tournament;
@@ -15,6 +16,16 @@ class StandingsPage extends StatefulWidget {
 }
 
 class _StandingsPageState extends State<StandingsPage> {
+  final Map<String, bool> _visibleColumns = {
+    'played': true,
+    'won': true,
+    'drawn': true,
+    'lost': true,
+    'goalsFor': true,
+    'goalsAgainst': true,
+    'goalDifference': true,
+    'points': true,
+  };
   @override
   void initState() {
     super.initState();
@@ -54,7 +65,7 @@ class _StandingsPageState extends State<StandingsPage> {
                   viewModel.loadStandings(widget.tournament.id!);
                 },
                 icon: const Icon(Icons.refresh),
-                label: const Text('Retry'),
+                label: Text(S.of(context).retry),
               ),
             ],
           ),
@@ -69,20 +80,22 @@ class _StandingsPageState extends State<StandingsPage> {
         },
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
-          children: const [
+          children: [
             SizedBox(height: 120),
             Icon(Icons.emoji_events_outlined, size: 56, color: Colors.grey),
             SizedBox(height: 16),
             Center(
-              child: Text(
-                'No standings yet',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              child: Center(
+                child: Text(
+                  S.of(context).noStandingsYet,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
               ),
             ),
             SizedBox(height: 8),
             Center(
               child: Text(
-                'Add teams and finish matches to see the standings.',
+                S.of(context).addTeamsAndFinishMatches,
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.grey),
               ),
@@ -102,12 +115,21 @@ class _StandingsPageState extends State<StandingsPage> {
         children: [
           _buildSummary(viewModel.standings),
           const SizedBox(height: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              IconButton(
+                onPressed: _showColumnSettings,
+                icon: const Icon(Icons.tune),
+                tooltip: 'Column Settings',
+              ),
+            ],
+          ),
           _buildStandingsTable(viewModel.standings),
           const SizedBox(height: 12),
-          const Text(
-            'P: Played  W: Won  D: Drawn  L: Lost\n'
-            'GF: Goals For  GA: Goals Against  GD: Goal Difference  PTS: Points',
-            style: TextStyle(fontSize: 11, color: Colors.grey),
+          Text(
+            S.of(context).standingsLegend,
+            style: const TextStyle(fontSize: 11, color: Colors.grey),
           ),
         ],
       ),
@@ -119,12 +141,29 @@ class _StandingsPageState extends State<StandingsPage> {
       0,
       (total, team) => total + team.played,
     );
-
     return Row(
       children: [
-        _SummaryItem(label: 'Teams', value: '${standings.length}'),
-        _SummaryItem(label: 'Matches played', value: '$totalPlayed'),
-        _SummaryItem(label: 'Leader', value: standings.first.teamName),
+        Expanded(
+          flex: 1,
+          child: _SummaryItem(
+            label: S.of(context).teams,
+            value: '${standings.length}',
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: _SummaryItem(
+            label: S.of(context).matchesPlayed,
+            value: '$totalPlayed',
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: _SummaryItem(
+            label: S.of(context).leader,
+            value: standings.first.teamName,
+          ),
+        ),
       ],
     );
   }
@@ -144,17 +183,49 @@ class _StandingsPageState extends State<StandingsPage> {
         headingRowHeight: 44,
         dataRowMinHeight: 48,
         dataRowMaxHeight: 56,
-        columns: const [
+        columns: [
           DataColumn(label: Text('#', style: headingStyle)),
-          DataColumn(label: Text('Team', style: headingStyle)),
-          DataColumn(label: Text('P', style: headingStyle), numeric: true),
-          DataColumn(label: Text('W', style: headingStyle), numeric: true),
-          DataColumn(label: Text('D', style: headingStyle), numeric: true),
-          DataColumn(label: Text('L', style: headingStyle), numeric: true),
-          DataColumn(label: Text('GF', style: headingStyle), numeric: true),
-          DataColumn(label: Text('GA', style: headingStyle), numeric: true),
-          DataColumn(label: Text('GD', style: headingStyle), numeric: true),
-          DataColumn(label: Text('PTS', style: headingStyle), numeric: true),
+          DataColumn(label: Text(S.of(context).team, style: headingStyle)),
+          if (_visibleColumns['played']!)
+            DataColumn(
+              label: Text(S.of(context).played, style: headingStyle),
+              numeric: true,
+            ),
+          if (_visibleColumns['won']!)
+            DataColumn(
+              label: Text(S.of(context).won, style: headingStyle),
+              numeric: true,
+            ),
+          if (_visibleColumns['drawn']!)
+            DataColumn(
+              label: Text(S.of(context).drawn, style: headingStyle),
+              numeric: true,
+            ),
+          if (_visibleColumns['lost']!)
+            DataColumn(
+              label: Text(S.of(context).lost, style: headingStyle),
+              numeric: true,
+            ),
+          if (_visibleColumns['goalsFor']!)
+            DataColumn(
+              label: Text(S.of(context).goalsFor, style: headingStyle),
+              numeric: true,
+            ),
+          if (_visibleColumns['goalsAgainst']!)
+            DataColumn(
+              label: Text(S.of(context).goalsAgainst, style: headingStyle),
+              numeric: true,
+            ),
+          if (_visibleColumns['goalDifference']!)
+            DataColumn(
+              label: Text(S.of(context).goalDifference, style: headingStyle),
+              numeric: true,
+            ),
+          if (_visibleColumns['points']!)
+            DataColumn(
+              label: Text(S.of(context).points, style: headingStyle),
+              numeric: true,
+            ),
         ],
         rows: List.generate(standings.length, (index) {
           final team = standings[index];
@@ -187,39 +258,199 @@ class _StandingsPageState extends State<StandingsPage> {
                   ),
                 ),
               ),
-              DataCell(Text('${team.played}')),
-              DataCell(Text('${team.won}')),
-              DataCell(Text('${team.drawn}')),
-              DataCell(Text('${team.lost}')),
-              DataCell(Text('${team.goalsFor}')),
-              DataCell(Text('${team.goalsAgainst}')),
-              DataCell(
-                Text(
-                  team.goalDifference > 0
-                      ? '+${team.goalDifference}'
-                      : '${team.goalDifference}',
-                  style: TextStyle(
-                    color: team.goalDifference > 0
-                        ? Colors.green.shade700
-                        : team.goalDifference < 0
-                        ? Colors.red.shade700
-                        : null,
+              if (_visibleColumns['played']!) DataCell(Text('${team.played}')),
+              if (_visibleColumns['won']!) DataCell(Text('${team.won}')),
+              if (_visibleColumns['drawn']!) DataCell(Text('${team.drawn}')),
+              if (_visibleColumns['lost']!) DataCell(Text('${team.lost}')),
+              if (_visibleColumns['goalsFor']!)
+                DataCell(Text('${team.goalsFor}')),
+              if (_visibleColumns['goalsAgainst']!)
+                DataCell(Text('${team.goalsAgainst}')),
+              if (_visibleColumns['goalDifference']!)
+                DataCell(
+                  Text(
+                    team.goalDifference > 0
+                        ? '+${team.goalDifference}'
+                        : '${team.goalDifference}',
+                    style: TextStyle(
+                      color: team.goalDifference > 0
+                          ? Colors.green.shade700
+                          : team.goalDifference < 0
+                          ? Colors.red.shade700
+                          : null,
+                    ),
                   ),
                 ),
-              ),
-              DataCell(
-                Text(
-                  '${team.points}',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: isLeader ? Colors.green.shade700 : null,
+              if (_visibleColumns['points']!)
+                DataCell(
+                  Text(
+                    '${team.points}',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: isLeader ? Colors.green.shade700 : null,
+                    ),
                   ),
                 ),
-              ),
             ],
           );
         }),
       ),
+    );
+  }
+
+  void _showColumnSettings() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+
+      builder: (dialogContext) {
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            return AlertDialog(
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(dialogContext).pop();
+                  },
+                  child: Text(S.of(context).close),
+                ),
+              ],
+              title: const Text('Column Settings'),
+              content: SizedBox(
+                width: double.maxFinite,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              // Played
+                              CheckboxListTile(
+                                contentPadding: EdgeInsets.zero,
+                                dense: true,
+                                title: Text(S.of(context).played),
+                                value: _visibleColumns['played'],
+                                onChanged: (value) {
+                                  setDialogState(() {
+                                    _visibleColumns['played'] = value ?? false;
+                                  });
+                                  setState(() {});
+                                },
+                              ),
+                              // Won
+                              CheckboxListTile(
+                                contentPadding: EdgeInsets.zero,
+                                dense: true,
+                                title: Text(S.of(context).won),
+                                value: _visibleColumns['won'],
+                                onChanged: (value) {
+                                  setDialogState(() {
+                                    _visibleColumns['won'] = value ?? false;
+                                  });
+                                  setState(() {});
+                                },
+                              ),
+                              // Drawn
+                              CheckboxListTile(
+                                contentPadding: EdgeInsets.zero,
+                                dense: true,
+                                title: Text(S.of(context).drawn),
+                                value: _visibleColumns['drawn'],
+                                onChanged: (value) {
+                                  setDialogState(() {
+                                    _visibleColumns['drawn'] = value ?? false;
+                                  });
+                                  setState(() {});
+                                },
+                              ),
+                              // Lost
+                              CheckboxListTile(
+                                contentPadding: EdgeInsets.zero,
+                                dense: true,
+                                title: Text(S.of(context).lost),
+                                value: _visibleColumns['lost'],
+                                onChanged: (value) {
+                                  setDialogState(() {
+                                    _visibleColumns['lost'] = value ?? false;
+                                  });
+                                  setState(() {});
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              // Goals For
+                              CheckboxListTile(
+                                contentPadding: EdgeInsets.zero,
+                                dense: true,
+                                title: Text(S.of(context).goalsFor),
+                                value: _visibleColumns['goalsFor'],
+                                onChanged: (value) {
+                                  setDialogState(() {
+                                    _visibleColumns['goalsFor'] =
+                                        value ?? false;
+                                  });
+                                  setState(() {});
+                                },
+                              ),
+                              // Goals Against
+                              CheckboxListTile(
+                                contentPadding: EdgeInsets.zero,
+                                dense: true,
+                                title: Text(S.of(context).goalsAgainst),
+                                value: _visibleColumns['goalsAgainst'],
+                                onChanged: (value) {
+                                  setDialogState(() {
+                                    _visibleColumns['goalsAgainst'] =
+                                        value ?? false;
+                                  });
+                                  setState(() {});
+                                },
+                              ),
+                              // Goal Difference
+                              CheckboxListTile(
+                                contentPadding: EdgeInsets.zero,
+                                dense: true,
+                                title: Text(S.of(context).goalDifference),
+                                value: _visibleColumns['goalDifference'],
+                                onChanged: (value) {
+                                  setDialogState(() {
+                                    _visibleColumns['goalDifference'] =
+                                        value ?? false;
+                                  });
+                                  setState(() {});
+                                },
+                              ),
+                              // Points
+                              CheckboxListTile(
+                                contentPadding: EdgeInsets.zero,
+                                dense: true,
+                                title: Text(S.of(context).points),
+                                value: _visibleColumns['points'],
+                                onChanged: (value) {
+                                  setDialogState(() {
+                                    _visibleColumns['points'] = value ?? false;
+                                  });
+                                  setState(() {});
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }

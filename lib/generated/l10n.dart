@@ -743,6 +743,106 @@ class S {
       args: [amount],
     );
   }
+
+  /// `No standings yet`
+  String get noStandingsYet {
+    return Intl.message(
+      'No standings yet',
+      name: 'noStandingsYet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add teams and finish matches to see the standings.`
+  String get addTeamsAndFinishMatches {
+    return Intl.message(
+      'Add teams and finish matches to see the standings.',
+      name: 'addTeamsAndFinishMatches',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Teams`
+  String get teams {
+    return Intl.message('Teams', name: 'teams', desc: '', args: []);
+  }
+
+  /// `Matches played`
+  String get matchesPlayed {
+    return Intl.message(
+      'Matches played',
+      name: 'matchesPlayed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Leader`
+  String get leader {
+    return Intl.message('Leader', name: 'leader', desc: '', args: []);
+  }
+
+  /// `P: Played  W: Won  D: Drawn  L: Lost\nGF: Goals For  GA: Goals Against  GD: Goal Difference  PTS: Points`
+  String get standingsLegend {
+    return Intl.message(
+      'P: Played  W: Won  D: Drawn  L: Lost\nGF: Goals For  GA: Goals Against  GD: Goal Difference  PTS: Points',
+      name: 'standingsLegend',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Played`
+  String get played {
+    return Intl.message('Played', name: 'played', desc: '', args: []);
+  }
+
+  /// `Won`
+  String get won {
+    return Intl.message('Won', name: 'won', desc: '', args: []);
+  }
+
+  /// `Drawn`
+  String get drawn {
+    return Intl.message('Drawn', name: 'drawn', desc: '', args: []);
+  }
+
+  /// `Lost`
+  String get lost {
+    return Intl.message('Lost', name: 'lost', desc: '', args: []);
+  }
+
+  /// `For`
+  String get goalsFor {
+    return Intl.message('For', name: 'goalsFor', desc: '', args: []);
+  }
+
+  /// `Against`
+  String get goalsAgainst {
+    return Intl.message('Against', name: 'goalsAgainst', desc: '', args: []);
+  }
+
+  /// `Difference`
+  String get goalDifference {
+    return Intl.message(
+      'Difference',
+      name: 'goalDifference',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Points`
+  String get points {
+    return Intl.message('Points', name: 'points', desc: '', args: []);
+  }
+
+  /// `Close`
+  String get close {
+    return Intl.message('Close', name: 'close', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

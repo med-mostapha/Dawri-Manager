@@ -138,5 +138,19 @@
         "type": "int"
       }
     }
-  }
+  },
+  "noStandingsYet": "لا يوجد ترتيب حتى الآن",
+  "addTeamsAndFinishMatches": "أضف الفرق وأنهِ المباريات لعرض الترتيب.",
+  "teams": "الفرق",
+  "matchesPlayed": "المباريات الملعوبة",
+  "leader": "المتصدر",
+  "standingsLegend": "ل: لعب  ف: فاز  ت: تعادل  خ: خسر\nله: أهداف له  عليه: أهداف عليه  ف.أ: فارق الأهداف  ن: النقاط",
+  "played": "لعب",
+  "won": "فاز",
+  "drawn": "تعادل",
+  "lost": "خسر",
+  "goalsFor": "له",
+  "goalsAgainst": "عليه",
+  "goalDifference": "الفارق",
+  "points": "النقاط"
 }

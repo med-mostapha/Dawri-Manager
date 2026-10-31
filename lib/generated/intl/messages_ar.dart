@@ -46,6 +46,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "تعذرت إضافة اللاعب. حاول مجددًا.",
     ),
     "addTeam": MessageLookupByLibrary.simpleMessage("إضافة فريق"),
+    "addTeamsAndFinishMatches": MessageLookupByLibrary.simpleMessage(
+      "أضف الفرق وأنهِ المباريات لعرض الترتيب.",
+    ),
     "addTwoTeamsToGenerateSchedule": MessageLookupByLibrary.simpleMessage(
       "أضف فريقين على الأقل لإنشاء جدول المباريات.",
     ),
@@ -72,6 +75,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "deleteGoalTitle": MessageLookupByLibrary.simpleMessage("حذف الهدف؟"),
     "deletePlayer": MessageLookupByLibrary.simpleMessage("حذف اللاعب"),
     "deleteTeamTitle": m1,
+    "drawn": MessageLookupByLibrary.simpleMessage("تعادل"),
     "duplicateTeamName": MessageLookupByLibrary.simpleMessage(
       "يوجد فريق بهذا الاسم في هذه البطولة بالفعل.",
     ),
@@ -95,8 +99,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "إنشاء جدول المباريات",
     ),
     "generating": MessageLookupByLibrary.simpleMessage("جارٍ إنشاء الجدول..."),
+    "goalDifference": MessageLookupByLibrary.simpleMessage("الفارق"),
     "goals": MessageLookupByLibrary.simpleMessage("الأهداف"),
+    "goalsAgainst": MessageLookupByLibrary.simpleMessage("عليه"),
     "goalsCount": m2,
+    "goalsFor": MessageLookupByLibrary.simpleMessage("له"),
     "increaseBy": m3,
     "invalidMatchId": MessageLookupByLibrary.simpleMessage(
       "معرّف المباراة غير صالح.",
@@ -104,7 +111,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "invalidPlayerAge": MessageLookupByLibrary.simpleMessage(
       "يجب أن يكون العمر بين 1 و99.",
     ),
+    "leader": MessageLookupByLibrary.simpleMessage("المتصدر"),
     "loading": MessageLookupByLibrary.simpleMessage("جارٍ التحميل..."),
+    "lost": MessageLookupByLibrary.simpleMessage("خسر"),
     "matchDetails": MessageLookupByLibrary.simpleMessage("تفاصيل المباراة"),
     "matchFinished": MessageLookupByLibrary.simpleMessage("تم إنهاء المباراة."),
     "matchIdMissing": MessageLookupByLibrary.simpleMessage(
@@ -117,6 +126,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "لم تتغير حالة المباراة. يرجى التحديث.",
     ),
     "matchesCount": m4,
+    "matchesPlayed": MessageLookupByLibrary.simpleMessage("المباريات الملعوبة"),
     "minute": MessageLookupByLibrary.simpleMessage("الدقيقة"),
     "noGoalsRecordedYet": MessageLookupByLibrary.simpleMessage(
       "لم يتم تسجيل أي أهداف حتى الآن.",
@@ -127,11 +137,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "noPlayersYet": MessageLookupByLibrary.simpleMessage(
       "لا يوجد لاعبون حتى الآن",
     ),
+    "noStandingsYet": MessageLookupByLibrary.simpleMessage(
+      "لا يوجد ترتيب حتى الآن",
+    ),
     "noTeamYet": MessageLookupByLibrary.simpleMessage(
       "لا يوجد لاعبون حتى الآن",
     ),
     "ok": MessageLookupByLibrary.simpleMessage("حسنًا"),
     "pageHomeTitle": MessageLookupByLibrary.simpleMessage("مدير الدوري"),
+    "played": MessageLookupByLibrary.simpleMessage("لعب"),
     "player": MessageLookupByLibrary.simpleMessage("اللاعب"),
     "playerAge": m5,
     "playerAgeOptional": MessageLookupByLibrary.simpleMessage(
@@ -150,6 +164,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "pleaseSelectTeam": MessageLookupByLibrary.simpleMessage(
       "يرجى اختيار فريق.",
     ),
+    "points": MessageLookupByLibrary.simpleMessage("النقاط"),
     "refresh": MessageLookupByLibrary.simpleMessage("تحديث"),
     "reopen": MessageLookupByLibrary.simpleMessage("إعادة فتح"),
     "reopenMatchBeforeAddingGoals": MessageLookupByLibrary.simpleMessage(
@@ -173,11 +188,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "selectTeamFirst": MessageLookupByLibrary.simpleMessage(
       "اختر فريقًا أولًا",
     ),
+    "standingsLegend": MessageLookupByLibrary.simpleMessage(
+      "ل: لعب  ف: فاز  ت: تعادل  خ: خسر\nله: أهداف له  عليه: أهداف عليه  ف.أ: فارق الأهداف  ن: النقاط",
+    ),
     "team": MessageLookupByLibrary.simpleMessage("الفريق"),
     "teamName": MessageLookupByLibrary.simpleMessage("اسم الفريق"),
     "teamNameRequired": MessageLookupByLibrary.simpleMessage(
       "يرجى إدخال اسم الفريق.",
     ),
+    "teams": MessageLookupByLibrary.simpleMessage("الفرق"),
     "teamsCount": m8,
     "unexpectedError": MessageLookupByLibrary.simpleMessage(
       "حدث خطأ غير متوقع.",
@@ -192,5 +211,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "updatePlayerFailed": MessageLookupByLibrary.simpleMessage(
       "تعذر تحديث اللاعب. حاول مجددًا.",
     ),
+    "won": MessageLookupByLibrary.simpleMessage("فاز"),
   };
 }

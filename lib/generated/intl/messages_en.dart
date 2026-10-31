@@ -46,6 +46,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Can\'t add player. Please try again.",
     ),
     "addTeam": MessageLookupByLibrary.simpleMessage("Add Team"),
+    "addTeamsAndFinishMatches": MessageLookupByLibrary.simpleMessage(
+      "Add teams and finish matches to see the standings.",
+    ),
     "addTwoTeamsToGenerateSchedule": MessageLookupByLibrary.simpleMessage(
       "Add at least two teams to generate the schedule.",
     ),
@@ -53,6 +56,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "cannotModifyTeamsAfterSchedule": MessageLookupByLibrary.simpleMessage(
       "You cannot add, edit, or delete teams after generating the schedule.",
     ),
+    "close": MessageLookupByLibrary.simpleMessage("Close"),
     "confirmDeleteGoal": MessageLookupByLibrary.simpleMessage(
       "Are you sure you want to delete this goal?",
     ),
@@ -74,6 +78,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "deleteGoalTitle": MessageLookupByLibrary.simpleMessage("Delete Goal?"),
     "deletePlayer": MessageLookupByLibrary.simpleMessage("Delete player"),
     "deleteTeamTitle": m1,
+    "drawn": MessageLookupByLibrary.simpleMessage("Drawn"),
     "duplicateTeamName": MessageLookupByLibrary.simpleMessage(
       "A team with this name may already exist in this tournament.",
     ),
@@ -99,14 +104,19 @@ class MessageLookup extends MessageLookupByLibrary {
       "Generate Schedule",
     ),
     "generating": MessageLookupByLibrary.simpleMessage("Generating..."),
+    "goalDifference": MessageLookupByLibrary.simpleMessage("Difference"),
     "goals": MessageLookupByLibrary.simpleMessage("Goals"),
+    "goalsAgainst": MessageLookupByLibrary.simpleMessage("Against"),
     "goalsCount": m2,
+    "goalsFor": MessageLookupByLibrary.simpleMessage("For"),
     "increaseBy": m3,
     "invalidMatchId": MessageLookupByLibrary.simpleMessage("Invalid match ID."),
     "invalidPlayerAge": MessageLookupByLibrary.simpleMessage(
       "Age must be between 1 and 99.",
     ),
+    "leader": MessageLookupByLibrary.simpleMessage("Leader"),
     "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
+    "lost": MessageLookupByLibrary.simpleMessage("Lost"),
     "matchDetails": MessageLookupByLibrary.simpleMessage("Match Details"),
     "matchFinished": MessageLookupByLibrary.simpleMessage("Match finished."),
     "matchIdMissing": MessageLookupByLibrary.simpleMessage(
@@ -117,15 +127,18 @@ class MessageLookup extends MessageLookupByLibrary {
       "Match status was not changed. Please refresh.",
     ),
     "matchesCount": m4,
+    "matchesPlayed": MessageLookupByLibrary.simpleMessage("Matches played"),
     "minute": MessageLookupByLibrary.simpleMessage("Minute"),
     "noGoalsRecordedYet": MessageLookupByLibrary.simpleMessage(
       "No goals recorded yet.",
     ),
     "noMatchesYet": MessageLookupByLibrary.simpleMessage("No matches yet"),
     "noPlayersYet": MessageLookupByLibrary.simpleMessage("No players yet"),
+    "noStandingsYet": MessageLookupByLibrary.simpleMessage("No standings yet"),
     "noTeamYet": MessageLookupByLibrary.simpleMessage("No Teams Yet"),
     "ok": MessageLookupByLibrary.simpleMessage("OK"),
     "pageHomeTitle": MessageLookupByLibrary.simpleMessage("Dawri Manager"),
+    "played": MessageLookupByLibrary.simpleMessage("Played"),
     "player": MessageLookupByLibrary.simpleMessage("Player"),
     "playerAge": m5,
     "playerAgeOptional": MessageLookupByLibrary.simpleMessage("Age (optional)"),
@@ -142,6 +155,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "pleaseSelectTeam": MessageLookupByLibrary.simpleMessage(
       "Please select a team.",
     ),
+    "points": MessageLookupByLibrary.simpleMessage("Points"),
     "refresh": MessageLookupByLibrary.simpleMessage("Refresh"),
     "reopen": MessageLookupByLibrary.simpleMessage("Reopen"),
     "reopenMatchBeforeAddingGoals": MessageLookupByLibrary.simpleMessage(
@@ -163,11 +177,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "selectTeamFirst": MessageLookupByLibrary.simpleMessage(
       "Select a team first",
     ),
+    "standingsLegend": MessageLookupByLibrary.simpleMessage(
+      "P: Played  W: Won  D: Drawn  L: Lost\nGF: Goals For  GA: Goals Against  GD: Goal Difference  PTS: Points",
+    ),
     "team": MessageLookupByLibrary.simpleMessage("Team"),
     "teamName": MessageLookupByLibrary.simpleMessage("Team name"),
     "teamNameRequired": MessageLookupByLibrary.simpleMessage(
       "Please enter a team name.",
     ),
+    "teams": MessageLookupByLibrary.simpleMessage("Teams"),
     "teamsCount": m8,
     "unexpectedError": MessageLookupByLibrary.simpleMessage(
       "An unexpected error occurred.",
@@ -182,5 +200,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "updatePlayerFailed": MessageLookupByLibrary.simpleMessage(
       "Can\'t update player. Please try again.",
     ),
+    "won": MessageLookupByLibrary.simpleMessage("Won"),
   };
 }

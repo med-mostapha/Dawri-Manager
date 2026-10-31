@@ -138,5 +138,20 @@
         "type": "int"
       }
     }
-  }
+  },
+  "noStandingsYet": "No standings yet",
+  "addTeamsAndFinishMatches": "Add teams and finish matches to see the standings.",
+  "teams": "Teams",
+  "matchesPlayed": "Matches played",
+  "leader": "Leader",
+  "standingsLegend": "P: Played  W: Won  D: Drawn  L: Lost\nGF: Goals For  GA: Goals Against  GD: Goal Difference  PTS: Points",
+  "played": "Played",
+  "won": "Won",
+  "drawn": "Drawn",
+  "lost": "Lost",
+  "goalsFor": "For",
+  "goalsAgainst": "Against",
+  "goalDifference": "Difference",
+  "points": "Points",
+  "close": "Close"
 }

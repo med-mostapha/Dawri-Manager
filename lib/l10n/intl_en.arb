@@ -27,7 +27,6 @@
   "unknown": "Unknown",
   "playerNameRequired": "Player name is required.",
   "invalidPlayerAge": "Age must be between 1 and 99.",
-  "delete": "Delete",
   "cancel": "Cancel",
   "create": "Create",
   "saveChanges": "Save Changes",
@@ -85,5 +84,59 @@
   },
   "unknownTeam": "Unknown team",
   "finished": "Finished",
-  "scheduled": "Scheduled"
+  "scheduled": "Scheduled",
+  "reopenMatchTitle": "Reopen Match?",
+  "finishMatchTitle": "Finish Match?",
+  "reopenMatchMessage": "This match will become editable again.",
+  "finishMatchMessage": "The result will count in the standings and top scorers.",
+  "reopen": "Reopen",
+  "finish": "Finish",
+  "invalidMatchId": "Invalid match ID.",
+  "matchStatusNotChanged": "Match status was not changed. Please refresh.",
+  "matchReopened": "Match reopened.",
+  "matchFinished": "Match finished.",
+  "updateMatchStatusFailed": "Failed to update match status.",
+  "matchDetails": "Match Details",
+  "reopenMatchBeforeAddingGoals": "Reopen the match before adding goals.",
+  "addGoal": "Add Goal",
+  "goals": "Goals",
+  "goalsCount": "{count} goals",
+  "noGoalsRecordedYet": "No goals recorded yet.",
+  "loading": "Loading...",
+  "unknownPlayer": "Unknown player",
+  "deleteGoalTitle": "Delete Goal?",
+  "confirmDeleteGoal": "Are you sure you want to delete this goal?",
+  "delete": "Delete",
+  "deleteGoalFailed": "Failed to delete goal.",
+  "couldNotFindBothTeams": "Could not find both teams.",
+  "failedToLoadTeams": "Failed to load teams.",
+  "editGoal": "Edit Goal",
+  "saveGoal": "Save Goal",
+  "updateGoal": "Update Goal",
+  "team": "Team",
+  "player": "Player",
+  "selectTeamFirst": "Select a team first",
+  "selectPlayer": "Select a player",
+  "minute": "Minute",
+  "failedToLoadPlayers": "Failed to load players.",
+  "pleaseSelectTeam": "Please select a team.",
+  "pleaseSelectPlayer": "Please select a player.",
+  "matchIdMissing": "The match ID is missing.",
+  "failedToSaveGoal": "Failed to save the goal.",
+  "increaseBy": "Increase by {amount}",
+  "@increaseBy": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "decreaseBy": "Decrease by {amount}",
+  "@decreaseBy": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  }
 }

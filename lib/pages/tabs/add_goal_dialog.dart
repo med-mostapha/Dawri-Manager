@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tournament_organizer/generated/l10n.dart';
 
 import 'package:tournament_organizer/models/goal.dart';
 import 'package:tournament_organizer/models/match.dart';
@@ -60,7 +61,7 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
       if (!mounted) return;
 
       setState(() {
-        _error = 'Failed to load players.';
+        _error = S.of(context).failedToLoadPlayers;
       });
     } finally {
       if (mounted) {
@@ -108,7 +109,7 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
 
       setState(() {
         _isLoadingPlayers = false;
-        _error = 'Failed to load players.';
+        _error = S.of(context).failedToLoadPlayers;
       });
     }
   }
@@ -124,14 +125,14 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
 
     if (_selectedTeamId == null) {
       setState(() {
-        _error = 'Please select a team.';
+        _error = S.of(context).pleaseSelectTeam;
       });
       return;
     }
 
     if (_selectedPlayerId == null) {
       setState(() {
-        _error = 'Please select a player.';
+        _error = S.of(context).pleaseSelectPlayer;
       });
       return;
     }
@@ -140,7 +141,7 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
 
     if (matchId == null) {
       setState(() {
-        _error = 'The match ID is missing.';
+        _error = S.of(context).matchIdMissing;
       });
       return;
     }
@@ -171,8 +172,9 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
     } else {
       setState(() {
         _isSaving = false;
-        _error =
-            context.read<GoalViewModel>().error ?? 'Failed to save the goal.';
+        _error = _error =
+            context.read<GoalViewModel>().error ??
+            S.of(context).failedToSaveGoal;
       });
     }
   }
@@ -180,8 +182,8 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
   Widget _buildTeamSelector() {
     return DropdownButtonFormField<int>(
       initialValue: _selectedTeamId,
-      decoration: const InputDecoration(
-        labelText: 'Team',
+      decoration: InputDecoration(
+        labelText: S.of(context).team,
         border: OutlineInputBorder(),
       ),
       items: widget.teams
@@ -211,12 +213,14 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
 
     return DropdownButtonFormField<int>(
       initialValue: _selectedPlayerId,
-      decoration: const InputDecoration(
-        labelText: 'Player',
+      decoration: InputDecoration(
+        labelText: S.of(context).player,
         border: OutlineInputBorder(),
       ),
       hint: Text(
-        _selectedTeamId == null ? 'Select a team first' : 'Select a player',
+        _selectedTeamId == null
+            ? S.of(context).selectTeamFirst
+            : S.of(context).selectPlayer,
       ),
       items: _players
           .where((player) => player.id != null)
@@ -242,8 +246,8 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Text(
-          'Minute',
+        Text(
+          S.of(context).minute,
           textAlign: TextAlign.center,
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
@@ -283,7 +287,7 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
         const SizedBox(height: 4),
 
         IconButton.filledTonal(
-          tooltip: 'Increase by $amount',
+          tooltip: S.of(context).increaseBy(amount),
           onPressed: _isSaving || _minute >= 130
               ? null
               : () => _changeMinute(amount),
@@ -291,7 +295,7 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
         ),
 
         IconButton.filledTonal(
-          tooltip: 'Decrease by $amount',
+          tooltip: S.of(context).decreaseBy(amount),
           onPressed: _isSaving || _minute <= 1
               ? null
               : () => _changeMinute(-amount),
@@ -304,7 +308,9 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(widget.goal == null ? 'Add Goal' : 'Edit Goal'),
+      title: Text(
+        widget.goal == null ? S.of(context).addGoal : S.of(context).editGoal,
+      ),
       content: SingleChildScrollView(
         child: SizedBox(
           width: 360,
@@ -312,14 +318,6 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // if (isFinished)
-              //   const Padding(
-              //     padding: EdgeInsets.only(bottom: 12),
-              //     child: Text(
-              //       'This match is finished. Reopen it before adding goals.',
-              //       style: TextStyle(color: Colors.redAccent),
-              //     ),
-              //   ),
               _buildTeamSelector(),
               const SizedBox(height: 16),
               _buildPlayerSelector(),
@@ -339,7 +337,7 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
       actions: [
         TextButton(
           onPressed: _isSaving ? null : () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: Text(S.of(context).cancel),
         ),
         FilledButton(
           onPressed: _isSaving || _isLoadingPlayers ? null : _saveGoal,
@@ -349,7 +347,11 @@ class _AddGoalDialogState extends State<AddGoalDialog> {
                   height: 18,
                   child: CircularProgressIndicator(strokeWidth: 2),
                 )
-              : Text(widget.goal == null ? 'Save Goal' : 'Update Goal'),
+              : Text(
+                  widget.goal == null
+                      ? S.of(context).saveGoal
+                      : S.of(context).updateGoal,
+                ),
         ),
       ],
     );

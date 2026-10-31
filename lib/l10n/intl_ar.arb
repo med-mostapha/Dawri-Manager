@@ -85,5 +85,58 @@
   },
   "unknownTeam": "فريق غير معروف",
   "finished": "انتهت",
-  "scheduled": "مجدولة"
+  "scheduled": "مجدولة",
+  "reopenMatchTitle": "إعادة فتح المباراة؟",
+  "finishMatchTitle": "إنهاء المباراة؟",
+  "reopenMatchMessage": "ستصبح هذه المباراة قابلة للتعديل مرة أخرى.",
+  "finishMatchMessage": "ستُحتسب النتيجة في الترتيب وقائمة الهدافين.",
+  "reopen": "إعادة فتح",
+  "finish": "إنهاء",
+  "invalidMatchId": "معرّف المباراة غير صالح.",
+  "matchStatusNotChanged": "لم تتغير حالة المباراة. يرجى التحديث.",
+  "matchReopened": "تمت إعادة فتح المباراة.",
+  "matchFinished": "تم إنهاء المباراة.",
+  "updateMatchStatusFailed": "تعذر تحديث حالة المباراة.",
+  "matchDetails": "تفاصيل المباراة",
+  "reopenMatchBeforeAddingGoals": "أعد فتح المباراة قبل إضافة الأهداف.",
+  "addGoal": "إضافة هدف",
+  "goals": "الأهداف",
+  "goalsCount": "عدد الأهداف: {count}",
+  "noGoalsRecordedYet": "لم يتم تسجيل أي أهداف حتى الآن.",
+  "loading": "جارٍ التحميل...",
+  "unknownPlayer": "لاعب غير معروف",
+  "deleteGoalTitle": "حذف الهدف؟",
+  "confirmDeleteGoal": "هل أنت متأكد أنك تريد حذف هذا الهدف؟",
+  "deleteGoalFailed": "فشل حذف الهدف.",
+  "couldNotFindBothTeams": "تعذر العثور على كلا الفريقين.",
+  "failedToLoadTeams": "فشل تحميل الفرق.",
+  "editGoal": "تعديل الهدف",
+  "saveGoal": "حفظ الهدف",
+  "updateGoal": "تحديث الهدف",
+  "team": "الفريق",
+  "player": "اللاعب",
+  "selectTeamFirst": "اختر فريقًا أولًا",
+  "selectPlayer": "اختر لاعبًا",
+  "minute": "الدقيقة",
+  "failedToLoadPlayers": "فشل تحميل اللاعبين.",
+  "pleaseSelectTeam": "يرجى اختيار فريق.",
+  "pleaseSelectPlayer": "يرجى اختيار لاعب.",
+  "matchIdMissing": "معرّف المباراة غير موجود.",
+  "failedToSaveGoal": "فشل حفظ الهدف.",
+  "increaseBy": "زيادة بمقدار {amount}",
+  "@increaseBy": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "decreaseBy": "إنقاص بمقدار {amount}",
+  "@decreaseBy": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  }
 }

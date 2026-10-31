@@ -20,20 +20,27 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(teamName) => "Delete ${teamName}?";
+  static String m0(amount) => "Decrease by ${amount}";
 
-  static String m1(count) => "${count} matches";
+  static String m1(teamName) => "Delete ${teamName}?";
 
-  static String m2(age) => "Age: ${age}";
+  static String m2(count) => "${count} goals";
 
-  static String m3(count) => "Players (${count})";
+  static String m3(amount) => "Increase by ${amount}";
 
-  static String m4(number) => "Round ${number}";
+  static String m4(count) => "${count} matches";
 
-  static String m5(count) => "Teams (${count})";
+  static String m5(age) => "Age: ${age}";
+
+  static String m6(count) => "Players (${count})";
+
+  static String m7(number) => "Round ${number}";
+
+  static String m8(count) => "Teams (${count})";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "addGoal": MessageLookupByLibrary.simpleMessage("Add Goal"),
     "addPlayer": MessageLookupByLibrary.simpleMessage("Add Player"),
     "addPlayerFailed": MessageLookupByLibrary.simpleMessage(
       "Can\'t add player. Please try again.",
@@ -46,36 +53,81 @@ class MessageLookup extends MessageLookupByLibrary {
     "cannotModifyTeamsAfterSchedule": MessageLookupByLibrary.simpleMessage(
       "You cannot add, edit, or delete teams after generating the schedule.",
     ),
+    "confirmDeleteGoal": MessageLookupByLibrary.simpleMessage(
+      "Are you sure you want to delete this goal?",
+    ),
     "confirmDeletePlayer": MessageLookupByLibrary.simpleMessage(
       "Are you sure you want to delete this player?",
     ),
     "confirmDeleteTeam": MessageLookupByLibrary.simpleMessage(
       "Are you sure you want to delete this team?",
     ),
+    "couldNotFindBothTeams": MessageLookupByLibrary.simpleMessage(
+      "Could not find both teams.",
+    ),
     "create": MessageLookupByLibrary.simpleMessage("Create"),
+    "decreaseBy": m0,
     "delete": MessageLookupByLibrary.simpleMessage("Delete"),
+    "deleteGoalFailed": MessageLookupByLibrary.simpleMessage(
+      "Failed to delete goal.",
+    ),
+    "deleteGoalTitle": MessageLookupByLibrary.simpleMessage("Delete Goal?"),
     "deletePlayer": MessageLookupByLibrary.simpleMessage("Delete player"),
-    "deleteTeamTitle": m0,
+    "deleteTeamTitle": m1,
     "duplicateTeamName": MessageLookupByLibrary.simpleMessage(
       "A team with this name may already exist in this tournament.",
     ),
+    "editGoal": MessageLookupByLibrary.simpleMessage("Edit Goal"),
     "editPlayer": MessageLookupByLibrary.simpleMessage("Edit Player"),
     "editTeam": MessageLookupByLibrary.simpleMessage("Edit Team"),
+    "failedToLoadPlayers": MessageLookupByLibrary.simpleMessage(
+      "Failed to load players.",
+    ),
+    "failedToLoadTeams": MessageLookupByLibrary.simpleMessage(
+      "Failed to load teams.",
+    ),
+    "failedToSaveGoal": MessageLookupByLibrary.simpleMessage(
+      "Failed to save the goal.",
+    ),
+    "finish": MessageLookupByLibrary.simpleMessage("Finish"),
+    "finishMatchMessage": MessageLookupByLibrary.simpleMessage(
+      "The result will count in the standings and top scorers.",
+    ),
+    "finishMatchTitle": MessageLookupByLibrary.simpleMessage("Finish Match?"),
     "finished": MessageLookupByLibrary.simpleMessage("Finished"),
     "generateSchedule": MessageLookupByLibrary.simpleMessage(
       "Generate Schedule",
     ),
     "generating": MessageLookupByLibrary.simpleMessage("Generating..."),
+    "goals": MessageLookupByLibrary.simpleMessage("Goals"),
+    "goalsCount": m2,
+    "increaseBy": m3,
+    "invalidMatchId": MessageLookupByLibrary.simpleMessage("Invalid match ID."),
     "invalidPlayerAge": MessageLookupByLibrary.simpleMessage(
       "Age must be between 1 and 99.",
     ),
-    "matchesCount": m1,
+    "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
+    "matchDetails": MessageLookupByLibrary.simpleMessage("Match Details"),
+    "matchFinished": MessageLookupByLibrary.simpleMessage("Match finished."),
+    "matchIdMissing": MessageLookupByLibrary.simpleMessage(
+      "The match ID is missing.",
+    ),
+    "matchReopened": MessageLookupByLibrary.simpleMessage("Match reopened."),
+    "matchStatusNotChanged": MessageLookupByLibrary.simpleMessage(
+      "Match status was not changed. Please refresh.",
+    ),
+    "matchesCount": m4,
+    "minute": MessageLookupByLibrary.simpleMessage("Minute"),
+    "noGoalsRecordedYet": MessageLookupByLibrary.simpleMessage(
+      "No goals recorded yet.",
+    ),
     "noMatchesYet": MessageLookupByLibrary.simpleMessage("No matches yet"),
     "noPlayersYet": MessageLookupByLibrary.simpleMessage("No players yet"),
     "noTeamYet": MessageLookupByLibrary.simpleMessage("No Teams Yet"),
     "ok": MessageLookupByLibrary.simpleMessage("OK"),
     "pageHomeTitle": MessageLookupByLibrary.simpleMessage("Dawri Manager"),
-    "playerAge": m2,
+    "player": MessageLookupByLibrary.simpleMessage("Player"),
+    "playerAge": m5,
     "playerAgeOptional": MessageLookupByLibrary.simpleMessage("Age (optional)"),
     "playerAgeText": MessageLookupByLibrary.simpleMessage("Age"),
     "playerName": MessageLookupByLibrary.simpleMessage("Player name"),
@@ -83,25 +135,50 @@ class MessageLookup extends MessageLookupByLibrary {
       "Player name is required.",
     ),
     "players": MessageLookupByLibrary.simpleMessage("Players"),
-    "playersCount": m3,
+    "playersCount": m6,
+    "pleaseSelectPlayer": MessageLookupByLibrary.simpleMessage(
+      "Please select a player.",
+    ),
+    "pleaseSelectTeam": MessageLookupByLibrary.simpleMessage(
+      "Please select a team.",
+    ),
     "refresh": MessageLookupByLibrary.simpleMessage("Refresh"),
+    "reopen": MessageLookupByLibrary.simpleMessage("Reopen"),
+    "reopenMatchBeforeAddingGoals": MessageLookupByLibrary.simpleMessage(
+      "Reopen the match before adding goals.",
+    ),
+    "reopenMatchMessage": MessageLookupByLibrary.simpleMessage(
+      "This match will become editable again.",
+    ),
+    "reopenMatchTitle": MessageLookupByLibrary.simpleMessage("Reopen Match?"),
     "retry": MessageLookupByLibrary.simpleMessage("Retry"),
-    "roundTitle": m4,
+    "roundTitle": m7,
     "saveChanges": MessageLookupByLibrary.simpleMessage("Save Changes"),
+    "saveGoal": MessageLookupByLibrary.simpleMessage("Save Goal"),
     "scheduleAlreadyGenerated": MessageLookupByLibrary.simpleMessage(
       "Schedule already generated",
     ),
     "scheduled": MessageLookupByLibrary.simpleMessage("Scheduled"),
+    "selectPlayer": MessageLookupByLibrary.simpleMessage("Select a player"),
+    "selectTeamFirst": MessageLookupByLibrary.simpleMessage(
+      "Select a team first",
+    ),
+    "team": MessageLookupByLibrary.simpleMessage("Team"),
     "teamName": MessageLookupByLibrary.simpleMessage("Team name"),
     "teamNameRequired": MessageLookupByLibrary.simpleMessage(
       "Please enter a team name.",
     ),
-    "teamsCount": m5,
+    "teamsCount": m8,
     "unexpectedError": MessageLookupByLibrary.simpleMessage(
       "An unexpected error occurred.",
     ),
     "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),
+    "unknownPlayer": MessageLookupByLibrary.simpleMessage("Unknown player"),
     "unknownTeam": MessageLookupByLibrary.simpleMessage("Unknown team"),
+    "updateGoal": MessageLookupByLibrary.simpleMessage("Update Goal"),
+    "updateMatchStatusFailed": MessageLookupByLibrary.simpleMessage(
+      "Failed to update match status.",
+    ),
     "updatePlayerFailed": MessageLookupByLibrary.simpleMessage(
       "Can\'t update player. Please try again.",
     ),

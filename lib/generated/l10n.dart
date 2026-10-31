@@ -159,11 +159,6 @@ class S {
     );
   }
 
-  /// `Delete`
-  String get delete {
-    return Intl.message('Delete', name: 'delete', desc: '', args: []);
-  }
-
   /// `Cancel`
   String get cancel {
     return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
@@ -407,6 +402,346 @@ class S {
   /// `Scheduled`
   String get scheduled {
     return Intl.message('Scheduled', name: 'scheduled', desc: '', args: []);
+  }
+
+  /// `Reopen Match?`
+  String get reopenMatchTitle {
+    return Intl.message(
+      'Reopen Match?',
+      name: 'reopenMatchTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finish Match?`
+  String get finishMatchTitle {
+    return Intl.message(
+      'Finish Match?',
+      name: 'finishMatchTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This match will become editable again.`
+  String get reopenMatchMessage {
+    return Intl.message(
+      'This match will become editable again.',
+      name: 'reopenMatchMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The result will count in the standings and top scorers.`
+  String get finishMatchMessage {
+    return Intl.message(
+      'The result will count in the standings and top scorers.',
+      name: 'finishMatchMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reopen`
+  String get reopen {
+    return Intl.message('Reopen', name: 'reopen', desc: '', args: []);
+  }
+
+  /// `Finish`
+  String get finish {
+    return Intl.message('Finish', name: 'finish', desc: '', args: []);
+  }
+
+  /// `Invalid match ID.`
+  String get invalidMatchId {
+    return Intl.message(
+      'Invalid match ID.',
+      name: 'invalidMatchId',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Match status was not changed. Please refresh.`
+  String get matchStatusNotChanged {
+    return Intl.message(
+      'Match status was not changed. Please refresh.',
+      name: 'matchStatusNotChanged',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Match reopened.`
+  String get matchReopened {
+    return Intl.message(
+      'Match reopened.',
+      name: 'matchReopened',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Match finished.`
+  String get matchFinished {
+    return Intl.message(
+      'Match finished.',
+      name: 'matchFinished',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to update match status.`
+  String get updateMatchStatusFailed {
+    return Intl.message(
+      'Failed to update match status.',
+      name: 'updateMatchStatusFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Match Details`
+  String get matchDetails {
+    return Intl.message(
+      'Match Details',
+      name: 'matchDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reopen the match before adding goals.`
+  String get reopenMatchBeforeAddingGoals {
+    return Intl.message(
+      'Reopen the match before adding goals.',
+      name: 'reopenMatchBeforeAddingGoals',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Goal`
+  String get addGoal {
+    return Intl.message('Add Goal', name: 'addGoal', desc: '', args: []);
+  }
+
+  /// `Goals`
+  String get goals {
+    return Intl.message('Goals', name: 'goals', desc: '', args: []);
+  }
+
+  /// `{count} goals`
+  String goalsCount(Object count) {
+    return Intl.message(
+      '$count goals',
+      name: 'goalsCount',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `No goals recorded yet.`
+  String get noGoalsRecordedYet {
+    return Intl.message(
+      'No goals recorded yet.',
+      name: 'noGoalsRecordedYet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading...`
+  String get loading {
+    return Intl.message('Loading...', name: 'loading', desc: '', args: []);
+  }
+
+  /// `Unknown player`
+  String get unknownPlayer {
+    return Intl.message(
+      'Unknown player',
+      name: 'unknownPlayer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Goal?`
+  String get deleteGoalTitle {
+    return Intl.message(
+      'Delete Goal?',
+      name: 'deleteGoalTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete this goal?`
+  String get confirmDeleteGoal {
+    return Intl.message(
+      'Are you sure you want to delete this goal?',
+      name: 'confirmDeleteGoal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get delete {
+    return Intl.message('Delete', name: 'delete', desc: '', args: []);
+  }
+
+  /// `Failed to delete goal.`
+  String get deleteGoalFailed {
+    return Intl.message(
+      'Failed to delete goal.',
+      name: 'deleteGoalFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Could not find both teams.`
+  String get couldNotFindBothTeams {
+    return Intl.message(
+      'Could not find both teams.',
+      name: 'couldNotFindBothTeams',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to load teams.`
+  String get failedToLoadTeams {
+    return Intl.message(
+      'Failed to load teams.',
+      name: 'failedToLoadTeams',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Goal`
+  String get editGoal {
+    return Intl.message('Edit Goal', name: 'editGoal', desc: '', args: []);
+  }
+
+  /// `Save Goal`
+  String get saveGoal {
+    return Intl.message('Save Goal', name: 'saveGoal', desc: '', args: []);
+  }
+
+  /// `Update Goal`
+  String get updateGoal {
+    return Intl.message('Update Goal', name: 'updateGoal', desc: '', args: []);
+  }
+
+  /// `Team`
+  String get team {
+    return Intl.message('Team', name: 'team', desc: '', args: []);
+  }
+
+  /// `Player`
+  String get player {
+    return Intl.message('Player', name: 'player', desc: '', args: []);
+  }
+
+  /// `Select a team first`
+  String get selectTeamFirst {
+    return Intl.message(
+      'Select a team first',
+      name: 'selectTeamFirst',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select a player`
+  String get selectPlayer {
+    return Intl.message(
+      'Select a player',
+      name: 'selectPlayer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Minute`
+  String get minute {
+    return Intl.message('Minute', name: 'minute', desc: '', args: []);
+  }
+
+  /// `Failed to load players.`
+  String get failedToLoadPlayers {
+    return Intl.message(
+      'Failed to load players.',
+      name: 'failedToLoadPlayers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select a team.`
+  String get pleaseSelectTeam {
+    return Intl.message(
+      'Please select a team.',
+      name: 'pleaseSelectTeam',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select a player.`
+  String get pleaseSelectPlayer {
+    return Intl.message(
+      'Please select a player.',
+      name: 'pleaseSelectPlayer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The match ID is missing.`
+  String get matchIdMissing {
+    return Intl.message(
+      'The match ID is missing.',
+      name: 'matchIdMissing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to save the goal.`
+  String get failedToSaveGoal {
+    return Intl.message(
+      'Failed to save the goal.',
+      name: 'failedToSaveGoal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Increase by {amount}`
+  String increaseBy(int amount) {
+    return Intl.message(
+      'Increase by $amount',
+      name: 'increaseBy',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `Decrease by {amount}`
+  String decreaseBy(int amount) {
+    return Intl.message(
+      'Decrease by $amount',
+      name: 'decreaseBy',
+      desc: '',
+      args: [amount],
+    );
   }
 }
 

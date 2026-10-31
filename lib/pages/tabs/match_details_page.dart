@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:tournament_organizer/database/database_helper.dart';
+import 'package:tournament_organizer/generated/l10n.dart';
 import 'package:tournament_organizer/models/goal.dart';
 import 'package:tournament_organizer/models/match.dart';
 import 'package:tournament_organizer/models/team.dart';
@@ -72,14 +73,14 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
         _awayTeam = awayTeam;
 
         if (homeTeam == null || awayTeam == null) {
-          _error = 'Could not find both teams.';
+          _error = S.of(context).couldNotFindBothTeams;
         }
       });
     } catch (e) {
       if (!mounted) return;
 
       setState(() {
-        _error = 'Failed to load teams.';
+        _error = S.of(context).failedToLoadTeams;
       });
     } finally {
       if (mounted) {
@@ -97,20 +98,26 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(isFinished ? 'Reopen Match?' : 'Finish Match?'),
+        title: Text(
+          isFinished
+              ? S.of(context).reopenMatchTitle
+              : S.of(context).finishMatchTitle,
+        ),
         content: Text(
           isFinished
-              ? 'This match will become editable again.'
-              : 'The result will count in the standings and top scorers.',
+              ? S.of(context).reopenMatchMessage
+              : S.of(context).finishMatchMessage,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: const Text('Cancel'),
+            child: Text(S.of(context).cancel),
           ),
           FilledButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(isFinished ? 'Reopen' : 'Finish'),
+            child: Text(
+              isFinished ? S.of(context).reopen : S.of(context).finish,
+            ),
           ),
         ],
       ),
@@ -122,7 +129,7 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
 
     if (matchId == null) {
       ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('Invalid match ID.')));
+          .showSnackBar(SnackBar(content: Text(S.of(context).invalidMatchId)));
       return;
     }
 
@@ -135,9 +142,7 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
 
       if (changedRows == 0) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Match status was not changed. Please refresh.'),
-          ),
+          SnackBar(content: Text(S.of(context).matchStatusNotChanged)),
         );
         return;
       }
@@ -148,14 +153,18 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(isFinished ? 'Match reopened.' : 'Match finished.'),
+          content: Text(
+            isFinished
+                ? S.of(context).matchReopened
+                : S.of(context).matchFinished,
+          ),
         ),
       );
     } catch (e) {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to update match status.')),
+        SnackBar(content: Text(S.of(context).updateMatchStatusFailed)),
       );
     }
   }
@@ -177,7 +186,7 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
         .length;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Match Details')),
+      appBar: AppBar(title: Text(S.of(context).matchDetails)),
       body: _buildBody(
         goals: goals,
         homeScore: homeScore,
@@ -190,7 +199,7 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
   Future<void> _openAddGoalDialog() async {
     if (_status == MatchStatus.finished) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Reopen the match before adding goals.')),
+        SnackBar(content: Text(S.of(context).reopenMatchBeforeAddingGoals)),
       );
       return;
     }
@@ -254,7 +263,7 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
                 FilledButton.icon(
                   onPressed: _openAddGoalDialog,
                   icon: const Icon(Icons.add),
-                  label: const Text('Add Goal'),
+                  label: Text(S.of(context).addGoal),
                 )
               else
                 const SizedBox.shrink(),
@@ -268,8 +277,8 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
                 ),
                 label: Text(
                   _status == MatchStatus.finished
-                      ? 'Reopen Match'
-                      : 'Finish Match',
+                      ? S.of(context).reopen
+                      : S.of(context).finish,
                 ),
               ),
             ],
@@ -320,7 +329,7 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
             ),
             const SizedBox(height: 12),
             Text(
-              isFinished ? 'Finished' : 'Scheduled',
+              isFinished ? S.of(context).finished : S.of(context).scheduled,
               style: TextStyle(
                 color: isFinished ? Colors.green : Colors.grey,
                 fontWeight: FontWeight.w500,
@@ -335,9 +344,15 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
   Widget _buildGoalsHeader(int goalsCount) {
     return Row(
       children: [
-        Text('Goals', style: Theme.of(context).textTheme.titleLarge),
+        Text(
+          S.of(context).goals,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
         const Spacer(),
-        Text('$goalsCount', style: Theme.of(context).textTheme.titleMedium),
+        Text(
+          S.of(context).goalsCount(goalsCount),
+          style: Theme.of(context).textTheme.titleMedium,
+        ), //############################
       ],
     );
   }
@@ -356,9 +371,9 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
   }
 
   Widget _buildEmptyGoalsState() {
-    return const BuildPlaceholder(
+    return BuildPlaceholder(
       icon: Icons.sports_soccer_outlined,
-      message: 'No goals recorded yet.',
+      message: S.of(context).noGoalsRecordedYet,
     );
   }
 
@@ -372,8 +387,8 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
         final playerName =
             snapshot.data?.name ??
             (snapshot.connectionState == ConnectionState.waiting
-                ? 'Loading...'
-                : 'Unknown player');
+                ? S.of(context).loading
+                : S.of(context).unknownPlayer);
 
         return GestureDetector(
           onDoubleTap: canEdit ? () => _openEditGoalDialog(goal) : null,
@@ -416,17 +431,23 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
     final shouldDelete = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Delete Goal?'),
-        content: const Text('Are you sure you want to delete this goal?'),
+        title: Text(S.of(context).deleteGoalTitle),
+        content: Text(S.of(context).confirmDeleteGoal),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: const Text('Cancel'),
+            child: Text(S.of(context).cancel),
           ),
-          MaterialButton(
-            color: Colors.redAccent,
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+            ),
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: const Text('Delete', style: TextStyle(color: Colors.white)),
+            child: Text(
+              S.of(context).delete,
+              style: const TextStyle(color: Colors.white),
+            ),
           ),
         ],
       ),
@@ -453,7 +474,7 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
     if (!success) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('Failed to delete goal.')));
+      ).showSnackBar(SnackBar(content: Text(S.of(context).deleteGoalFailed)));
     }
   }
 
@@ -468,7 +489,10 @@ class _MatchDetailsPageState extends State<MatchDetailsPage> {
             const SizedBox(height: 12),
             Text(_error!, textAlign: TextAlign.center),
             const SizedBox(height: 12),
-            OutlinedButton(onPressed: _loadTeams, child: const Text('Retry')),
+            OutlinedButton(
+              onPressed: _loadTeams,
+              child: Text(S.of(context).retry),
+            ),
           ],
         ),
       ),
